@@ -60,6 +60,14 @@ export class AppComponent {
       routeLink : '/posts',
       name : 'Posts'
     },
+    {
+      routeLink : '/subject',
+      name : 'Subject'
+    },
+    {
+      routeLink : '/localstorage',
+      name : 'LocalData'
+    },
   ]
 
   redirect(path:any,name:any){

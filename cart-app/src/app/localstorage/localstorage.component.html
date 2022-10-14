@@ -1,0 +1,21 @@
+<form #myform="ngForm" (ngSubmit)="save(myform)">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="name" name="name" class="form-control" id="name" ngModel>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" id="email" ngModel>
+    </div>
+    <button type="submit" class="btn btn-primary mb-3">Save</button>
+    <hr>
+    <div class="mb-3">
+        <label for="fname" class="form-label h1">Search Data</label>
+        <input type="fname" name="fname" class="form-control" id="fname" ngModel placeholder="Enter Name">
+    </div>
+    <button type="button" class="btn btn-primary mb-3" (click)="search(myform.value.fname)">Search</button>
+</form>
+<div *ngIf="searchdata">
+    <p>Name : <strong>{{searchdata.name}}</strong></p>
+    <p>Email : <strong>{{searchdata.email}}</strong></p>
+</div>

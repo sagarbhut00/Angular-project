@@ -1,6 +1,9 @@
 li .active{
     color: blue;
 }
+.router-link-active{
+    color: blue;
+}
 a{
     cursor: pointer;
 }

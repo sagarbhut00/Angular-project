@@ -13,6 +13,8 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { CustomPreloadingService } from './custom-preloading.service';
 import { RegisterformComponent } from './registerform/registerform.component';
 import { PostsComponent } from './posts/posts.component';
+import { SubjectComponent } from './subject/subject.component';
+import { LocalstorageComponent } from './localstorage/localstorage.component';
 
 const route: Routes = [
   {
@@ -71,15 +73,28 @@ const route: Routes = [
   },
   {
     path: 'posts',
+    title: 'Posts',
     component: PostsComponent
   },
   {
+    path: 'subject',
+    title: 'Subject',
+    component: SubjectComponent
+  },
+  {
+    path: 'localstorage',
+    title: 'LocalData',
+    component: LocalstorageComponent
+  },
+  {
     path: 'login',
+    title: 'Login',
     // data : {preload : true},
     loadChildren: () => import('./form/form.module').then(m => m.FormModule)
   },
   {
     path: 'register',
+    title: 'Register',
     component: RegisterformComponent
   },
   {

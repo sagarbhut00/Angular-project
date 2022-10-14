@@ -27,8 +27,10 @@
                     </li>
                 </ul> -->
 
-                <li class="nav-item me-2 d-flex" style="list-style-type: none;align-items: center;">
-                    <a class="nav-link" [routerLink]="['/login']" routerLinkActive="router-link-active">Login</a>
+                <li class="nav-item me-2 d-flex m-auto">
+                    <!-- <a class="nav-link" [routerLink]="['/login']" routerLinkActive="router-link-active">Login</a> -->
+                    <a class="nav-link" (click)="redirect('/login','Login')"
+                        [ngClass]="{active: isActive('Login')}">Login</a>
                 </li>
 
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
