@@ -11,9 +11,6 @@ export class TextStyleDirective {
     
    }
 
-
-  
-
   @HostListener('click') onClick() {
     this.changeStyle(this.TextStyle);
   }
