@@ -15,6 +15,7 @@ export class ParentComponent implements AfterViewInit {
   msg:any;
 
   @ViewChild(ChildComponent) child:any;
+  
   constructor() { }
 
   voted(yes : boolean){
