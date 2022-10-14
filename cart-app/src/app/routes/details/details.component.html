@@ -1,0 +1,11 @@
+<div class="card mt-3" style="width: 18rem;" *ngIf="user">
+    <div class="card-body">
+      <h5 class="card-title">Name : {{user.name}}</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">UserName : {{user.username}}</li>
+      <li class="list-group-item">Email : {{user.email}}</li>
+      <li class="list-group-item">Phone No. : {{user.phone}}</li>
+      <li class="list-group-item">WebSite : <a [href]="user.website">{{user.website}}</a></li>
+    </ul>
+  </div>

@@ -1,0 +1,197 @@
+<div class="row justify-content-center align-items-center h-100 mt-3">
+    <div class="col-12 col-lg-9 col-xl-7">
+        <div class="card shadow-2-strong card-registration bg-light shadow" style="border-radius: 15px">
+            <div class="card-body p-4 p-md-5">
+                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
+                <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                                <input type="text" id="firstName" name="fname" class="form-control" placeholder="fname"
+                                    formControlName="firstName" />
+                                <label class="form-label" for="firstName">First Name<sup>*</sup></label>
+                            </div>
+                            <small class="text-danger" *ngIf="
+                  registerForm.get('firstName').invalid &&
+                  (registerForm.get('firstName').touched || temp)
+                ">*Plase Enter First Name.</small>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                                <input type="text" id="lastName" class="form-control" placeholder="lname"
+                                    formControlName="lastName" />
+                                <label class="form-label" for="lastName">Last Name<sup>*</sup></label>
+                            </div>
+
+                            <div *ngIf="temp">
+                                <small class="text-danger"
+                                    *ngIf="registerForm.get('lastName').invalid && registerForm.get('lastName').errors?.['required']">*Plase
+                                    Enter Last Name.</small>
+                                <small *ngIf="registerForm.get('lastName').touched && registerForm.errors?.['namesame']"
+                                    class="text-danger">
+                                    *Last Name cannot match with First Name.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input type="email" id="emailAddress" class="form-control" placeholder="email"
+                            formControlName="email" />
+                        <label class="form-label" for="emailAddress">Email<sup>*</sup></label>
+                        <small class="text-danger" *ngIf="
+                registerForm.get('email').invalid &&
+                (registerForm.get('email').touched || temp)
+              ">
+                            <span *ngIf="registerForm.get('email').errors['required']">*Plase Enter valid email.</span>
+                            <span *ngIf="registerForm.get('email').errors['emailContain']">*This email id already taken,
+                                Please use other email.</span>
+                        </small>
+                    </div>
+
+                    <div formArrayName="phoneNo">
+                        <ng-container *ngFor="
+                let skill of registerForm.get('phoneNo').controls;
+                index as i
+              " formGroupName="{{ i }}">
+                            <div class="row">
+                                <div class="col-md-3 pb-2">
+                                    <select class="select form-control-lg" formControlName="type">
+                                        <option value="">Select Type</option>
+                                        <option value="Primary">Primary</option>
+                                        <option value="Secondary">Secondary</option>
+                                        <option value="Office">Office</option>
+                                        <option value="Emergency">Emergency</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-9 pb-2 form-floating">
+                                    <input type="text" id="phoneNumber" class="form-control"
+                                        (keypress)="keyPress($event)" placeholder="phone" formControlName="number"
+                                        maxlength="10" />
+                                    <label class="form-label ps-4" for="phoneNumber">Phone Number<sup>*</sup></label>
+                                    <small class="text-danger" *ngIf="
+                      registerForm.get('phoneNo.0').invalid &&
+                      (registerForm.get('phoneNo.0').touched || temp)
+                    ">*Plase Enter phone Number.
+                                    </small>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <button type="button" class="btn btn-secondary btn-sm mb-4" (click)="addContact()">
+                            + Add
+                        </button>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4 mt-4 pb-2">
+                            <div class="form-floating datepicker w-100">
+                                <input type="date" class="form-control" id="birthdayDate" placeholder="bdate"
+                                    formControlName="birthDate" />
+                                <label for="birthdayDate" class="form-label">Birthday</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4 pb-2">
+                            <label class="form-label" for="phoneNumber"><b>Designation</b></label><br />
+                            <select class="select form-control" formControlName="designation">
+                                <option value="Angular Devloper">Angular Devloper</option>
+                                <option value="Mac/ios Dev.">Mac/ios Dev.</option>
+                                <option value="Android Dev">Android Dev.</option>
+                                <option value="Web Dev.">Web Dev.</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4 d-flex align-items-center">
+                            <label class="form-label me-4" for="gender"><b>Gender</b></label><br />
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="femaleGender"
+                                    value="Female" formControlName="gender" />
+                                <label class="form-check-label" for="femaleGender">Female</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="maleGender" value="Male"
+                                    formControlName="gender" />
+                                <label class="form-check-label" for="maleGender">Male</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4 pb-2">
+                        <h6 class="pb-1">Skills</h6>
+                        <div class="form-group" formArrayName="skills">
+                            <ng-container *ngFor="let skill of registerForm.get('skills').controls;index as i">
+                                <input type="text" id="skill" class="form-control mt-2" placeholder="Add Skill"
+                                    formControlName="{{ i }}" />
+                            </ng-container>
+                            <button type="button" class="btn btn-secondary btn-sm mt-3" (click)="addSkill()">
+                                + Add
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <input class="btn btn-primary btn-lg mb-3" type="submit" value="Submit" /><br />
+                        <small>If you already register, please click
+                            <a [routerLink]="['/login']">Login</a>
+                        </small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center align-items-center h-100 mt-3" *ngIf="submitted">
+    <div class="col-12 col-lg-9 col-xl-7">
+        <div class="bg-light rounded p-3 mt-3 shadow">
+            <div class="row">
+                <div class="col-md-3">Full Name :</div>
+                <div class="col-md-9">
+                    <strong>{{ registerForm.value.firstName }}
+                        {{ registerForm.value.lastName }}
+                    </strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Email :</div>
+                <div class="col-md-9">
+                    <strong>{{ registerForm.value.email }}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">BirthDay :</div>
+                <div class="col-md-9">
+                    <strong>{{
+                        registerForm.value.birthDate | date: "dd/MM/YYYY"
+                        }}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Phone Number :</div>
+                <div class="col-md-9"></div>
+
+                <div class="row">
+                    <ng-container *ngFor="let item of registerForm.value.phoneNo; let i = index">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9">
+                            <strong>{{ registerForm.value.phoneNo[i].type }} -
+                                {{ registerForm.value.phoneNo[i].number }}</strong>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Designation :</div>
+                <div class="col-md-9">
+                    <strong>{{ registerForm.value.designation }}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

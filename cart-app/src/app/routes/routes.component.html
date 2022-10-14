@@ -1,0 +1,19 @@
+<div class="row mt-3">
+  <div class="col-md-4" *ngFor="let user of users; let i = index">
+    <div class="card mb-3" style="max-width: 540px;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="./assets/Image/profile.png" class="img-fluid rounded-start" alt="Profile Photo">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">Name : {{user.name}}</h5>
+            <p class="card-title">Email : {{user.email}}</p>
+            <p class="card-title">Company : {{user.company.name}}</p>
+            <a (click)="gotoItems(user.id)" class="btn btn-primary">Show More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

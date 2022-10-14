@@ -1,0 +1,49 @@
+<div class="container">
+    <p class="mt-3">(1)Custom Directive Practice and pipe.</p>
+    <!-- this use of costom directive -->
+    <h1 appChangetext><br>
+        {{title | uppercase}}(uppercase)
+    </h1>
+    <p>***************************************************************</p>
+    <p>(2)Content Projection Practice</p>
+    <ng-container *ngIf="isvalid; then con1;"></ng-container>
+    <ng-template #con1>
+        <div class="card" style="width: 18rem;">
+            <img src="./assets/Image/profile.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+            </div>
+        </div>
+    </ng-template>
+    <!-- <ng-template #con2></ng-template> -->
+    <div>
+        <button class="btn btn-primary mt-4 mb-4" (click)="toggle()">{{profile}} Profile</button>
+    </div>
+    <p>***************************************************************</p>
+    <p>(3)Custom Pipe Practice.</p>
+    <h5>Squre Root of 36 is : {{36 | sqrt}}</h5>
+</div>
+<!-- *********************************************************************** -->
+<!-- … -->
+<p>***************************************************************</p>
+<p>(4)NgContainer, NgtemplateOutlet and ngTemplate Practice.</p>
+<!-- … -->
+<ng-container *ngTemplateOutlet="tmpl; context: {$implicit: 'Hello'}">
+</ng-container>
+
+<ng-container *ngTemplateOutlet="tmpl; context: {$implicit: 'World !!!'}">
+</ng-container>
+
+<ng-container *ngTemplateOutlet="tmpl; context: {$implicit: 'World test !!!'}">
+</ng-container>
+
+
+<!-- … -->
+
+<ng-template #tmpl let-text1>
+    <b>how are you!!!!</b>
+  <h1>{{ text1 }}</h1>
+</ng-template>
+

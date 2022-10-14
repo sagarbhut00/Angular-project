@@ -1,0 +1,21 @@
+<div>
+    <table>
+        <tr><td [attr.colspan]="2+1" style="text-align:center ;">Name</td></tr>
+        <tr><td>sagar</td><td>bhut</td></tr>
+    </table>
+    <div [class.foo]="isFoo" class="m-3">Binding to a single CSS class</div>
+    <div [class]="classes" class="m-3">Binding to multiple CSS classes</div>
+    <div [style.backgroundColor]="color" class="m-3 p-3 text-danger">Binding to a single style.</div>
+    <div [style]="style1" class="m-3">Binding to multiple styles</div>
+    <p>" {{message}} "</p>
+    <h3>*Event Binding</h3>
+    <button class="btn btn-secondary mt-3 mb-3" (click)="func()">Click</button><br>
+    <p class="text-primary">*Using Event Binding</p>
+    <input id="abc" type="text" class="mt-3" [value]="title" (input)="title=getValue($event)"/>
+    <p>Your Input : {{title}}</p>
+
+    <p class="text-primary">*Using Template Variable</p>
+    <input id="abc" type="text" [(ngModel)]="title1" class="mt-3" #val>
+    <p>Your Input : {{val.value}}</p>
+</div>
+    

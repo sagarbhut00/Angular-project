@@ -1,0 +1,14 @@
+<div class="border p-3 mt-3" style="width:25% ;">
+
+    <div style=" display: flex; align-items: baseline;">
+
+        <ng-content select="[name]"></ng-content>
+        <h4 class="mb-3 ms-3">{{name}}
+        </h4>
+    </div>
+    <button type="button" class="btn btn-success" (click)="voted(true)" [disabled]="didvote">Agree</button>
+    <button type="button" class="btn btn-danger ms-3" (click)="voted(false)" [disabled]="didvote">Disagree</button>
+    
+
+</div>
+<button type="button" (click)="func()">Alert</button>

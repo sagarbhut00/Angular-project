@@ -1,0 +1,22 @@
+.foo{
+    border: 5px yellow solid;
+    background-color: aqua;
+    padding: 10px;
+}
+.class1{
+    border: 3px rgb(30, 5, 93) double;
+    background-color: rgb(243, 215, 138);
+    padding: 10px;
+}
+.class2{
+    color: brown;
+    padding: 10px;
+}
+td{
+    border: 2px solid;
+    padding: 5px;
+    padding: 10px;
+}
+table{
+    margin: 20px;
+}
