@@ -1,0 +1,11 @@
+.nav-link{
+    color: white;
+    opacity: 0.5;
+}
+.nav-link.active{
+    color: white !important;
+    opacity: inherit;
+}
+a{
+    cursor: pointer;
+}
