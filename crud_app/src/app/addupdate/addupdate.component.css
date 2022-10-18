@@ -1,0 +1,14 @@
+.ng-submitted .ng-invalid.form-control {
+    border-color: red;
+    box-shadow: 0 0 5px inset #e78b8b;
+}
+
+.ng-invalid.ng-touched.form-control {
+    border-color: red;
+    box-shadow: 0 0 5px inset #e78b8b;
+}
+
+/* .haserror .form-control {
+    border-color: red;
+    box-shadow: 0 0 5px inset #e78b8b;
+} */

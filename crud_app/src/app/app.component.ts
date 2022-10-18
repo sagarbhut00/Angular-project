@@ -12,29 +12,20 @@ export class AppComponent {
 
   navList = [
     {
-      routelink : '/home',
-      name : 'Home'
+      routelink: '/home',
+      name: 'Home'
     },
     {
-      routelink : '/users',
-      name : 'Users'
+      routelink: '/users',
+      name: 'Users'
     },
     {
-      routelink : '/login',
-      name : 'Logout'
+      routelink: '/login',
+      name: 'Logout'
     },
   ]
 
-  constructor(public route : Router) { 
+  constructor(public route: Router) {
     // document.getElementById('Home')?.classList.add('active');
-   }
-
-  redirect(url:any,name:string){
-    this.route.navigateByUrl(url);
-    this.selected = name;
-  }
-
-  isActive(name:string){
-    return this.selected === name;
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApputilityService } from '../apputility.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-users',
@@ -13,7 +14,7 @@ export class UsersComponent implements OnInit {
   editMode: any;
   data: any = [];
 
-  constructor(private route: Router, private appservice: ApputilityService) {
+  constructor(private route: Router, private appservice: ApputilityService, private toster: ToastrService) {
     this.fetchData();
   }
 
@@ -25,16 +26,19 @@ export class UsersComponent implements OnInit {
     this.route.navigateByUrl('users/add');
   }
 
-  editUser(i: any) {
+  editUser(item: any) {
     this.appservice.editMode.next(true);
-    this.route.navigate(['users/edit'], { queryParams: { i } });
+    this.route.navigate(['users/edit', item.id]);
   }
 
   deleteUser(id: any) {
-    let data = JSON.parse(localStorage.getItem('userData') || '');
-    console.log(data.splice(id, 1));
-    localStorage.setItem('userData', JSON.stringify(data));
-    this.fetchData();
+    if (confirm('Are you sure delete user?')) {
+      let data = JSON.parse(localStorage.getItem('userData') || '');
+      console.log(data.splice(id, 1));
+      localStorage.setItem('userData', JSON.stringify(data));
+      this.toster.success('User Deleted Successfully', 'Deleted!!')
+      this.fetchData();
+    }
   }
 
   fetchData() {

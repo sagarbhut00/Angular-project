@@ -6,35 +6,40 @@ import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   {
-    path:'',
-    redirectTo : '/home',
-    pathMatch : 'full'
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full'
   },
   {
-    path:'home',
+    path: 'home',
     title: 'Home',
     component: HomeComponent
   },
   {
-    path:'users',
+    path: 'users',
     title: 'Users',
     component: UsersComponent
   },
   {
-    path:'login',
+    path: 'login',
     title: 'Login',
     component: HomeComponent
   },
   {
-    path:'users/add',
+    path: 'users/add',
     title: 'Add User',
     component: AddupdateComponent
   },
   {
-    path:'users/edit',
+    path: 'users/edit/:id',
     title: 'Edit User',
     component: AddupdateComponent
   },
+  {
+    path: '**',
+    redirectTo: '/home',
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({
