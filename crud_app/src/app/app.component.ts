@@ -21,7 +21,7 @@ export class AppComponent {
     },
     {
       routelink: '/login',
-      name: 'Logout'
+      name: 'Login'
     },
   ]
 

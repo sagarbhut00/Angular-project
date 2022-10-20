@@ -1,0 +1,46 @@
+<div class="ms-4">
+    <h1>Login</h1>
+</div>
+
+<div class="bg-white">
+    <hr>
+    <div class="m-4">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" formControlName="username"
+                    (keydown)="onkeydown()">
+                <small class="text-danger" *ngIf="
+                    loginForm.get('username').invalid &&
+                    (loginForm.get('username').touched || submit)
+                    ">*Username is
+                    Required.</small>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" formControlName="password" maxlength="12"
+                    (keydown)="onkeydown()">
+                <ng-container
+                    *ngIf="loginForm.get('password').invalid && (loginForm.get('password').touched || submit)">
+
+                    <small *ngIf="loginForm.get('password').errors?.['required']" class="text-danger">*Password is
+                        Required.</small>
+                    <small *ngIf="loginForm.get('password').dirty && loginForm.get('password').errors?.['pattern']"
+                        class="text-danger">
+                        *Password must contain at least
+                        <pre>One Uppercase latter, One Lowercase latter
+One Digit, One special character required.</pre>
+                    </small>
+                </ng-container>
+            </div>
+            <div *ngIf="message" class="mb-3">
+                <small class="text-danger">*Username or Password incorrect.</small>
+            </div>
+            <div class="d-flex align-items-center">
+                <button type="submit" class="btn btn-primary me-3">Login</button>
+                <a [routerLink]="['/register']" routerLinkActive="router-link-active">Register</a>
+            </div>
+        </form>
+    </div>
+    <hr>
+</div>

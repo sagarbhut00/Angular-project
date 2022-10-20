@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddupdateComponent } from './addupdate/addupdate.component';
+import { LoginformComponent } from './forms/loginform/loginform.component';
+import { RegisterformComponent } from './forms/registerform/registerform.component';
 import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './users/users.component';
 
@@ -23,7 +25,12 @@ const routes: Routes = [
   {
     path: 'login',
     title: 'Login',
-    component: HomeComponent
+    component: LoginformComponent
+  },
+  {
+    path: 'register',
+    title: 'Register',
+    component: RegisterformComponent
   },
   {
     path: 'users/add',

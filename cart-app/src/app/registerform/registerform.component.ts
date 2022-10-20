@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registerform',
@@ -10,7 +10,7 @@ export class RegisterformComponent implements OnInit {
   registerForm: FormGroup | any;
   submitted = false;
   NotAllowemails = ['abc@gmail.com', 'xyz@gmail.com'];
-  temp:any;
+  temp: any;
 
 
   constructor() { }
@@ -24,8 +24,8 @@ export class RegisterformComponent implements OnInit {
       gender: new FormControl('Male'),
       phoneNo: new FormArray([
         new FormGroup({
-          type : new FormControl(''),
-          number : new FormControl('', [Validators.required,Validators.pattern("^[0-9]*$"), Validators.maxLength(10),Validators.minLength(10)])
+          type: new FormControl(''),
+          number: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.maxLength(10), Validators.minLength(10)])
         })
       ]),
       designation: new FormControl('Angular Devloper'),
@@ -45,7 +45,7 @@ export class RegisterformComponent implements OnInit {
 
   keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;
- 
+
     let inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
@@ -56,10 +56,10 @@ export class RegisterformComponent implements OnInit {
     this.registerForm.get('skills').push(new FormControl(null, Validators.required))
   }
 
-  addContact(){
+  addContact() {
     this.registerForm.get('phoneNo').push(new FormGroup({
-      type : new FormControl(''),
-      number : new FormControl('',[Validators.required,Validators.pattern("^[0-9]*$"), Validators.maxLength(10),Validators.minLength(10)])
+      type: new FormControl(''),
+      number: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.maxLength(10), Validators.minLength(10)])
     }))
   }
 

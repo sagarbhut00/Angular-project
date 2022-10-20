@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class ApputilityService {
 
   editMode = new BehaviorSubject(false);
+  user = new BehaviorSubject('');
 
 
   // id = Math.max(...characters.map(user => user.id));
@@ -20,5 +21,16 @@ export class ApputilityService {
     console.log(data);
     const user = data.find((obj: any) => obj.id === Number(userid));
     return user;
+  }
+
+  loginCheck(form: any) {
+    const data = JSON.parse(localStorage.getItem('registerData') || '');
+    const userobj = data.find((obj: any) => obj.username === form.value.username);
+    if (userobj !== undefined && (userobj.password === form.value.password)) {
+      this.user.next(userobj);
+      return true;
+    } else {
+      return false;
+    }
   }
 }

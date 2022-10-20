@@ -1,5 +1,8 @@
-<div class="pt-4" style="height: 350px ;padding-left: 100px;">
-    <h1>Hi Sagar!</h1>
-    <p>You're logged in Angular 10!!</p>
-    <a [routerLink]="['/users']" routerLinkActive="router-link-active" style="text-decoration: none;">Manage Users</a>
+<div class="container">
+    <div class="pt-4" style="height: 350px ;padding-left: 100px;">
+        <h1>Hi {{user.length === 0 ? 'User' : user.firstname}}!</h1>
+        <p>You're logged in Angular 10!!</p>
+        <a [routerLink]="['/users']" routerLinkActive="router-link-active" style="text-decoration: none;">Manage
+            Users</a>
+    </div>
 </div>
