@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApputilityService } from './apputility.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'crud_app';
   selected: string = '';
+  loggedIn = new Boolean();
 
   navList = [
     {
@@ -19,13 +21,18 @@ export class AppComponent {
       routelink: '/users',
       name: 'Users'
     },
-    {
-      routelink: '/login',
-      name: 'Login'
-    },
   ]
 
-  constructor(public route: Router) {
-    // document.getElementById('Home')?.classList.add('active');
+  constructor(public route: Router, private appservice: ApputilityService) { }
+
+  ngOnInit(): void {
+    this.appservice.loggedIn.subscribe((res) => { this.loggedIn = res; console.log(res); })
+    console.log(this.loggedIn);
+    this.appservice.autoLogin();
+  }
+
+  onLogout() {
+    this.appservice.loggedIn.next(false);
+    return ['/login'];
   }
 }

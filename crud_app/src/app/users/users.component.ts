@@ -12,16 +12,14 @@ export class UsersComponent implements OnInit {
 
 
   editMode: any;
-  data: any = [];
+  user: any;
   userList: any = [];
 
   constructor(private route: Router, private appservice: ApputilityService, private toster: ToastrService) {
-    this.appservice.user.subscribe((res: any) => this.userList = res.userList);
-    console.log(this.userList);
+    this.fetchData();
   }
 
   ngOnInit(): void {
-
   }
 
   addUser() {
@@ -36,25 +34,29 @@ export class UsersComponent implements OnInit {
 
   deleteUser(id: any) {
     if (confirm('Are you sure delete user?')) {
-      let data = JSON.parse(localStorage.getItem('userData') || '');
-      data.splice(id, 1);
-      localStorage.setItem('userData', JSON.stringify(data));
+      let data = this.appservice.getRegisterData();
+      let userarr = this.user.userList;
+      userarr.splice(id, 1);
+      this.appservice.user.next(this.user);
+
+      const newarray = data.map((obj: any) => {
+        if (obj.id === this.user.id) {
+          return { ...obj, userList: userarr }
+        }
+        return obj;
+      })
+
+      this.appservice.setRegisterData(newarray);
+      this.appservice.setLoginData(this.user);
+      this.route.navigateByUrl('/users');
       this.toster.success('User Deleted Successfully', 'Deleted!!')
       this.fetchData();
     }
   }
 
   fetchData() {
-    //   if (localStorage.getItem('userData') === null || localStorage.getItem('userData') == undefined) {
-    //     let userData: any = [];
-    //     localStorage.setItem('userData', JSON.stringify(userData));
-    //     return;
-    //   }
-    //   else {
-    //     this.data = JSON.parse(localStorage.getItem('userData') || '');
-    //   }
-
-
+    this.appservice.user.subscribe((res: any) => this.user = res);
+    this.userList = this.user.userList;
   }
 
 }

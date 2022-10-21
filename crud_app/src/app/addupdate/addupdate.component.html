@@ -1,7 +1,7 @@
 <div class="container">
     <div class="h-auto" style="padding: 40px 100px;">
         <h1>{{editMode ? 'Edit' : 'Add'}} User</h1>
-        <form class="row g-3" #myform="ngForm" (ngSubmit)="add(myform)">
+        <form class="row g-3" #myform="ngForm" (ngSubmit)="saveData(myform)">
             <input type="hidden" [(ngModel)]="id" name="id">
             <div class="col-md-6">
                 <label for="firstname" class="form-label">First Name</label>

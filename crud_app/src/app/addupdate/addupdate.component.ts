@@ -25,21 +25,23 @@ export class AddupdateComponent implements OnInit {
     if (/edit/.test(window.location.href)) {
       this.editMode = true;
       this.activated.paramMap.subscribe(param => {
-        this.userdata = this.appservice.fetchsingaluser(param.get('id'));
+        this.userdata = this.appservice.fetchsingaluser(this.user.userList, param.get('id'));
       })
     }
   }
 
-  saveData(form: NgForm) {
+  saveData(form: any) {
     if (form.valid) {
-      let data = JSON.parse(localStorage.getItem('userData') || '');
+      let data = this.appservice.getRegisterData();
+      const userarr = this.user.userList;
       if (!this.editMode) {
-        if (Object.keys(data).length === 0) {
+        console.log('add');
+        console.log(userarr);
+        if (Object.keys(userarr).length === 0) {
           this.id = 1;
         } else {
-          this.id = Math.max(...data.map((user: any) => user.id)) + 1;
+          this.id = Math.max(...userarr.map((res: any) => res.id)) + 1;
         }
-
         let obj = {
           id: this.id,
           firstname: form.value.firstname.replace(/\s+/g, ' ').trim(),
@@ -47,47 +49,41 @@ export class AddupdateComponent implements OnInit {
           username: form.value.username.replace(/\s+/g, ' ').trim(),
           password: form.value.password.replace(/\s+/g, ' ').trim()
         }
-        data.push(obj);
-        localStorage.setItem('userData', JSON.stringify(data));
-        this.toastr.success('User added successfully', 'Success!');
+        userarr.push(obj);
+        this.appservice.user.next(this.user);
 
+        const newarray = data.map((obj: any) => {
+          if (obj.id === this.user.id) {
+            return { ...obj, userList: userarr }
+          }
+          return obj;
+        })
+
+        this.appservice.setRegisterData(newarray);
+        this.appservice.setLoginData(this.user);
+        this.toastr.success('User Add successfully', 'Added!!');
+        this.route.navigateByUrl('/users');
       }
       else {
-        const objIndex = data.findIndex((obj: any) => obj.id === this.userdata.id);
-        data[objIndex].firstname = form.value.firstname.replace(/\s+/g, ' ').trim();
-        data[objIndex].lastname = form.value.lastname.replace(/\s+/g, ' ').trim();
-        data[objIndex].username = form.value.username.replace(/\s+/g, ' ').trim();
-        data[objIndex].password = form.value.password === '' ? this.userdata.password : form.value.password.replace(/\s+/g, ' ').trim();
-        localStorage.setItem('userData', JSON.stringify(data));
-        this.toastr.success('User Data Updated successfully', 'Updated!');
+        const objIndex = userarr.findIndex((obj: any) => obj.id === this.userdata.id);
+        userarr[objIndex].firstname = form.value.firstname.replace(/\s+/g, ' ').trim();
+        userarr[objIndex].lastname = form.value.lastname.replace(/\s+/g, ' ').trim();
+        userarr[objIndex].username = form.value.username.replace(/\s+/g, ' ').trim();
+        userarr[objIndex].password = form.value.password === '' ? this.userdata.password : form.value.password.replace(/\s+/g, ' ').trim();
+
+        this.appservice.user.next(this.user);
+
+        const newarray = data.map((obj: any) => {
+          if (obj.id === this.user.id) {
+            return { ...obj, userList: userarr }
+          }
+          return obj;
+        })
+        this.appservice.setRegisterData(newarray);
+        this.appservice.setLoginData(this.user);
+        this.toastr.success('User Update successfully', 'Updated!!');
+        this.route.navigateByUrl('/users');
       }
-      this.route.navigateByUrl('/users');
-    }
-  }
-
-  add(form: any) {
-    if (form.valid) {
-      let data = JSON.parse(localStorage.getItem('registerData') || '');
-      let obj = {
-        id: this.id,
-        firstname: form.value.firstname.replace(/\s+/g, ' ').trim(),
-        lastname: form.value.lastname.replace(/\s+/g, ' ').trim(),
-        username: form.value.username.replace(/\s+/g, ' ').trim(),
-        password: form.value.password.replace(/\s+/g, ' ').trim()
-      }
-      const userarr = this.user.userList;
-      userarr.push(obj);
-      this.appservice.user.next(this.user);
-
-      const newarray = data.map((obj: any) => {
-        if (obj.id === this.user.id) {
-          return { ...obj, userList: userarr }
-        }
-        return obj;
-      })
-
-      localStorage.setItem('registerData', JSON.stringify(newarray));
-      this.route.navigateByUrl('/users');
     }
   }
 }

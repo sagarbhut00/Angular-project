@@ -24,6 +24,7 @@
                 </tr>
             </tbody>
         </table>
-        <h4 *ngIf="userList === undefined" style="text-align :center;color:red;">No Record found</h4>
+        <h4 *ngIf="userList === undefined || userList.length === 0" style="text-align :center;color:red;">No Record
+            found</h4>
     </div>
 </div>
