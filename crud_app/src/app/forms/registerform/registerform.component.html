@@ -9,7 +9,6 @@
             <div class="mb-3">
                 <label for="firstname" class="form-label">First Name</label>
                 <input type="text" class="form-control" id="firstname" formControlName="firstname">
-                <div class="invalid-feedback"></div>
                 <small class="text-danger" *ngIf="
                   registerForm.get('firstname').invalid &&
                   (registerForm.get('firstname').touched || submit)

@@ -8,8 +8,13 @@ import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   {
+    path: 'login',
+    title: 'Login',
+    component: LoginformComponent
+  },
+  {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/login',
     pathMatch: 'full'
   },
   {
@@ -21,11 +26,6 @@ const routes: Routes = [
     path: 'users',
     title: 'Users',
     component: UsersComponent
-  },
-  {
-    path: 'login',
-    title: 'Login',
-    component: LoginformComponent
   },
   {
     path: 'register',

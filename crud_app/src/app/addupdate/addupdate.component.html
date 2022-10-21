@@ -1,38 +1,45 @@
 <div class="container">
     <div class="h-auto" style="padding: 40px 100px;">
         <h1>{{editMode ? 'Edit' : 'Add'}} User</h1>
-        <form class="row g-3" #myform="ngForm" (ngSubmit)="saveData(myform)">
-            <input type="hidden" [(ngModel)]="id" name="id">
+        <form class="row g-3" [formGroup]="addEditUserForm" (ngSubmit)="saveData()">
             <div class="col-md-6">
                 <label for="firstname" class="form-label">First Name</label>
-                <input type="text" name="firstname" class="form-control" id="firstname" required #fname="ngModel"
-                    pattern="^[a-zA-Z].*" [ngModel]="editMode ? userdata.firstname : ''">
-                <small class="text-danger" *ngIf="fname.invalid && (fname.touched || myform.submitted)">*Plase Enter
-                    Valid First Name.</small>
+                <input type="text" class="form-control" id="firstname" formControlName="firstname">
+                <small class="text-danger" *ngIf="
+                    addEditUserForm.get('firstname').invalid &&
+                    (addEditUserForm.get('firstname').touched || submit)
+                  ">*First Name is
+                    Required.</small>
             </div>
             <div class="col-md-6">
                 <label for="lastname" class="form-label">Last Name</label>
-                <input type="text" name="lastname" class="form-control" id="lastname" required #lname="ngModel"
-                    pattern="^[a-zA-Z].*" [ngModel]="editMode ? userdata.lastname : ''">
-                <small class="text-danger" *ngIf="lname.invalid && (lname.touched || myform.submitted)">*Plase Enter
-                    valid Last Name.</small>
+                <input type="text" class="form-control" id="lastname" formControlName="lastname">
+                <small class="text-danger" *ngIf="
+                    addEditUserForm.get('lastname').invalid &&
+                    (addEditUserForm.get('lastname').touched || submit)
+                  ">*Last Name is
+                    Required.</small>
             </div>
             <div class="col-md-6">
                 <label for="username" class="form-label">User Name</label>
-                <input type="text" name="username" class="form-control" id="username" required #uname="ngModel"
-                    pattern="^[a-zA-Z1-9].*" [ngModel]="editMode ? userdata.username : ''">
-                <small class="text-danger" *ngIf="uname.invalid && (uname.touched || myform.submitted)">*Plase Enter
-                    valid User Name.</small>
+                <input type="text" class="form-control" id="username" formControlName="username">
+                <small class="text-danger" *ngIf="
+                    addEditUserForm.get('username').invalid &&
+                    (addEditUserForm.get('username').touched || submit)
+                  ">*Username is
+                    Required.</small>
             </div>
             <div class="col-md-6">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" id="password" ngModel required
-                    maxlength="12" #pass="ngModel" pattern="^[a-zA-Z1-9].*" [ngModel]="editMode ? userdata.password: ''"
-                    passwordvalidator>
-                <ng-container *ngIf="pass.invalid && (pass.touched || myform.submitted)">
-                    <small *ngIf="(pass.errors?.['required'])" class="text-danger">*Password is
+                <input type="password" class="form-control" id="password" maxlength="12" formControlName="password">
+                <ng-container
+                    *ngIf="addEditUserForm.get('password').invalid && (addEditUserForm.get('password').touched || submit)">
+
+                    <small *ngIf="addEditUserForm.get('password').errors?.['required']" class="text-danger">*Password is
                         Required.</small>
-                    <small *ngIf="(pass.dirty || editMode) && pass.errors?.['Notmatchpassword']" class="text-danger">
+                    <small
+                        *ngIf="addEditUserForm.get('password').dirty && addEditUserForm.get('password').errors?.['pattern']"
+                        class="text-danger">
                         *Password must contain at least
                         <pre>One Uppercase latter, One Lowercase latter
 One Digit, One special character required.</pre>

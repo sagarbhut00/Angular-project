@@ -49,7 +49,7 @@ export class UsersComponent implements OnInit {
       this.appservice.setRegisterData(newarray);
       this.appservice.setLoginData(this.user);
       this.route.navigateByUrl('/users');
-      this.toster.success('User Deleted Successfully', 'Deleted!!')
+      this.toster.success('User Deleted Successfully');
       this.fetchData();
     }
   }

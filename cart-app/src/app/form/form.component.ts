@@ -8,8 +8,8 @@ import { NgForm } from '@angular/forms';
 })
 export class FormComponent implements OnInit {
   // @ViewChild('myform') temp:NgForm | undefined;
-  username:any = '';
-  email1:any = '';
+  username: any = '';
+  email1: any = '';
   submitted = false;
 
   constructor() { }
@@ -17,10 +17,8 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onsubmit(myform:any){
-    console.log(myform)
-    if(myform.valid){
-
+  onsubmit(myform: any) {
+    if (myform.valid) {
       this.username = myform?.value.username;
       this.email1 = myform?.value.email;
       this.submitted = true;

@@ -13,7 +13,7 @@ export class ApputilityService {
   constructor() { }
 
   loginCheck(form: any) {
-    const data = JSON.parse(localStorage.getItem('registerData') || '');
+    const data = this.getRegisterData();
     const userobj = data.find((obj: any) => obj.username === form.value.username);
     if (userobj !== undefined && (userobj.password === form.value.password)) {
       this.user.next(userobj);
@@ -34,7 +34,6 @@ export class ApputilityService {
   }
 
   fetchsingaluser(userlist: any, userid: any) {
-    console.log(userlist);
     const user = userlist.find((obj: any) => obj.id === Number(userid));
     return user;
   }

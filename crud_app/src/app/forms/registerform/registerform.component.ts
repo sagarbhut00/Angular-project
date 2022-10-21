@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ApputilityService } from 'src/app/apputility.service';
 
 @Component({
   selector: 'app-registerform',
@@ -15,10 +16,10 @@ export class RegisterformComponent implements OnInit {
   id: any;
   arr: any = [];
 
-  constructor(private fb: FormBuilder, private toastr: ToastrService, private route: Router) {
+  constructor(private fb: FormBuilder, private toastr: ToastrService, private route: Router, private appservice: ApputilityService) {
     if (localStorage.getItem('registerData') === null || localStorage.getItem('registerData') == undefined) {
       let userData: any = [];
-      localStorage.setItem('registerData', JSON.stringify(userData));
+      this.appservice.setRegisterData(userData);
       return;
     }
   }
@@ -34,11 +35,9 @@ export class RegisterformComponent implements OnInit {
 
   onSubmit() {
     this.submit = true;
-    console.log(this.registerForm.value.firstname);
+    if (this.registerForm.valid) {
 
-    if (this.registerForm.valid === true) {
-
-      let data = JSON.parse(localStorage.getItem('registerData') || '');
+      let data = this.appservice.getRegisterData();
 
       if (Object.keys(data).length === 0) {
         this.id = 1;
@@ -55,7 +54,7 @@ export class RegisterformComponent implements OnInit {
         userList: this.arr
       }
       data.push(obj);
-      localStorage.setItem('registerData', JSON.stringify(data));
+      this.appservice.setRegisterData(data);
       this.toastr.success('Register successfully');
     }
     this.route.navigateByUrl('/login');

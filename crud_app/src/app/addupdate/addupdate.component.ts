@@ -1,6 +1,6 @@
 import { formatCurrency } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApputilityService } from '../apputility.service';
@@ -12,31 +12,48 @@ import { ApputilityService } from '../apputility.service';
 })
 export class AddupdateComponent implements OnInit {
 
+  addEditUserForm: FormBuilder | any;
+  submit: any;
   editMode: any;
   id: any;
   userdata: any;
   user: any;
 
-  constructor(private route: Router, private appservice: ApputilityService, public toastr: ToastrService, private activated: ActivatedRoute) {
+  constructor(private route: Router, private appservice: ApputilityService, public toastr: ToastrService, private activated: ActivatedRoute, private fb: FormBuilder) {
     this.appservice.user.subscribe((res: any) => this.user = res);
+    this.appservice.editMode.subscribe((res) => this.editMode = res);
   }
   ngOnInit(): void {
-    this.appservice.editMode.subscribe((res) => this.editMode = res);
+
     if (/edit/.test(window.location.href)) {
       this.editMode = true;
       this.activated.paramMap.subscribe(param => {
-        this.userdata = this.appservice.fetchsingaluser(this.user.userList, param.get('id'));
+        let check = this.appservice.fetchsingaluser(this.user.userList, param.get('id'));
+        if (check === undefined) {
+          alert('User Not Found');
+          this.route.navigateByUrl('/users');
+        } else {
+          this.userdata = check;
+        }
+
       })
     }
+
+    this.addEditUserForm = this.fb.group({
+      firstname: [this.editMode ? this.userdata.firstname : '', Validators.required],
+      lastname: [this.editMode ? this.userdata.lastname : '', Validators.required],
+      username: [this.editMode ? this.userdata.username : '', Validators.required],
+      password: [this.editMode ? this.userdata.password : '', [Validators.required, Validators.pattern("^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,12}$")]]
+    });
+
   }
 
-  saveData(form: any) {
-    if (form.valid) {
+  saveData() {
+    this.submit = true;
+    if (this.addEditUserForm.valid) {
       let data = this.appservice.getRegisterData();
       const userarr = this.user.userList;
       if (!this.editMode) {
-        console.log('add');
-        console.log(userarr);
         if (Object.keys(userarr).length === 0) {
           this.id = 1;
         } else {
@@ -44,10 +61,10 @@ export class AddupdateComponent implements OnInit {
         }
         let obj = {
           id: this.id,
-          firstname: form.value.firstname.replace(/\s+/g, ' ').trim(),
-          lastname: form.value.lastname.replace(/\s+/g, ' ').trim(),
-          username: form.value.username.replace(/\s+/g, ' ').trim(),
-          password: form.value.password.replace(/\s+/g, ' ').trim()
+          firstname: this.addEditUserForm.value.firstname.replace(/\s+/g, ' ').trim(),
+          lastname: this.addEditUserForm.value.lastname.replace(/\s+/g, ' ').trim(),
+          username: this.addEditUserForm.value.username.replace(/\s+/g, ' ').trim(),
+          password: this.addEditUserForm.value.password.replace(/\s+/g, ' ').trim(),
         }
         userarr.push(obj);
         this.appservice.user.next(this.user);
@@ -66,10 +83,10 @@ export class AddupdateComponent implements OnInit {
       }
       else {
         const objIndex = userarr.findIndex((obj: any) => obj.id === this.userdata.id);
-        userarr[objIndex].firstname = form.value.firstname.replace(/\s+/g, ' ').trim();
-        userarr[objIndex].lastname = form.value.lastname.replace(/\s+/g, ' ').trim();
-        userarr[objIndex].username = form.value.username.replace(/\s+/g, ' ').trim();
-        userarr[objIndex].password = form.value.password === '' ? this.userdata.password : form.value.password.replace(/\s+/g, ' ').trim();
+        userarr[objIndex].firstname = this.addEditUserForm.value.firstname.replace(/\s+/g, ' ').trim();
+        userarr[objIndex].lastname = this.addEditUserForm.value.lastname.replace(/\s+/g, ' ').trim();
+        userarr[objIndex].username = this.addEditUserForm.value.username.replace(/\s+/g, ' ').trim();
+        userarr[objIndex].password = this.addEditUserForm.value.password === '' ? this.userdata.password : this.addEditUserForm.value.password.replace(/\s+/g, ' ').trim();
 
         this.appservice.user.next(this.user);
 

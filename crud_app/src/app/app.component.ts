@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ApputilityService } from './apputility.service';
 
 @Component({
@@ -23,12 +24,16 @@ export class AppComponent implements OnInit {
     },
   ]
 
-  constructor(public route: Router, private appservice: ApputilityService) { }
+  constructor(public route: Router, private appservice: ApputilityService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.appservice.loggedIn.subscribe((res) => { this.loggedIn = res; console.log(res); })
-    console.log(this.loggedIn);
+    this.appservice.loggedIn.subscribe((res) => this.loggedIn = res)
     this.appservice.autoLogin();
+
+    if (this.loggedIn === 'Login' && !(/login/.test(window.location.href))) {
+      alert('Please Login First');
+      this.route.navigate(['/login']);
+    }
   }
 
   redirect() {
@@ -39,6 +44,7 @@ export class AppComponent implements OnInit {
       this.appservice.user.next('');
       this.appservice.loggedIn.next('Login');
       this.route.navigate(['/login']);
+      this.toastr.success('Logout successfully');
     }
   }
 }
