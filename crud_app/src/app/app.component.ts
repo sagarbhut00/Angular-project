@@ -10,7 +10,7 @@ import { ApputilityService } from './apputility.service';
 export class AppComponent implements OnInit {
   title = 'crud_app';
   selected: string = '';
-  loggedIn = new Boolean();
+  loggedIn: any;
 
   navList = [
     {
@@ -31,8 +31,14 @@ export class AppComponent implements OnInit {
     this.appservice.autoLogin();
   }
 
-  onLogout() {
-    this.appservice.loggedIn.next(false);
-    return ['/login'];
+  redirect() {
+    if (this.loggedIn === 'Login') {
+      this.route.navigate(['/login']);
+    } else {
+      localStorage.removeItem('LoginData');
+      this.appservice.user.next('');
+      this.appservice.loggedIn.next('Login');
+      this.route.navigate(['/login']);
+    }
   }
 }

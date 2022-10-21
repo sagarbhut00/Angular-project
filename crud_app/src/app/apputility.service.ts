@@ -8,7 +8,7 @@ export class ApputilityService {
 
   editMode = new BehaviorSubject(false);
   user = new BehaviorSubject('');
-  loggedIn = new BehaviorSubject<boolean>(false);
+  loggedIn = new BehaviorSubject('');
 
   constructor() { }
 
@@ -17,7 +17,7 @@ export class ApputilityService {
     const userobj = data.find((obj: any) => obj.username === form.value.username);
     if (userobj !== undefined && (userobj.password === form.value.password)) {
       this.user.next(userobj);
-      this.loggedIn.next(true);
+      this.loggedIn.next('Logout');
       return true;
     } else {
       return false;
@@ -26,8 +26,10 @@ export class ApputilityService {
   autoLogin() {
     const data = this.getLoginData();
     if (!data) {
+      this.loggedIn.next('Login');
       return;
     }
+    this.loggedIn.next('Logout');
     this.user.next(data);
   }
 

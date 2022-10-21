@@ -11,9 +11,7 @@
             routerLinkActive="router-link-active">{{path.name}}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id='Login' [routerLink]="loggedIn ? onLogout() : ['/login']"
-            routerLinkActive="router-link-active">{{loggedIn ?
-            'Logout' : 'Login'}}</a>
+          <a class="nav-link" id='Loginout' (click)="redirect()" routerLinkActive="router-link-active">{{loggedIn}}</a>
         </li>
       </ul>
     </div>
