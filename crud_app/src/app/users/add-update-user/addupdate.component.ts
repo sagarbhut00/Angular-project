@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ApputilityService } from '../apputility.service';
+import { ApputilityService } from '../../apputility.service';
 
 @Component({
   selector: 'app-addupdate',

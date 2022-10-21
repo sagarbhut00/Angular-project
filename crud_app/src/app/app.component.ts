@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
     this.appservice.autoLogin();
 
     if (this.loggedIn === 'Login' && !(/login/.test(window.location.href))) {
-      alert('Please Login First');
       this.route.navigate(['/login']);
     }
   }

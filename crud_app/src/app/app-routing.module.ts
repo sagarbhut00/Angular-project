@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddupdateComponent } from './addupdate/addupdate.component';
-import { LoginformComponent } from './forms/loginform/loginform.component';
-import { RegisterformComponent } from './forms/registerform/registerform.component';
+import { LoginformComponent } from './auth/loginform/loginform.component';
+import { RegisterformComponent } from './auth/registerform/registerform.component';
 import { HomeComponent } from './home/home.component';
-import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   {
@@ -24,23 +22,13 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    title: 'Users',
-    component: UsersComponent
+    loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
+
   },
   {
     path: 'register',
     title: 'Register',
     component: RegisterformComponent
-  },
-  {
-    path: 'users/add',
-    title: 'Add User',
-    component: AddupdateComponent
-  },
-  {
-    path: 'users/edit/:id',
-    title: 'Edit User',
-    component: AddupdateComponent
   },
   {
     path: '**',
