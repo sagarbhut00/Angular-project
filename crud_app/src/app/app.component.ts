@@ -33,6 +33,9 @@ export class AppComponent implements OnInit {
     if (this.loggedIn === 'Login' && !(/login/.test(window.location.href))) {
       this.route.navigate(['/login']);
     }
+    if (this.loggedIn === 'Logout' && (/login/.test(window.location.href))) {
+      this.route.navigate(['/home']);
+    }
   }
 
   redirect() {

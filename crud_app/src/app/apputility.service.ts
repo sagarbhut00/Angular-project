@@ -8,7 +8,7 @@ export class ApputilityService {
 
   editMode = new BehaviorSubject(false);
   user = new BehaviorSubject('');
-  loggedIn = new BehaviorSubject('');
+  loggedIn = new BehaviorSubject('Login');
 
   constructor() { }
 
