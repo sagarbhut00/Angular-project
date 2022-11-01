@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { TodosService } from './todos/todos.service';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +10,10 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'ToDoApp';
 
-  constructor(private route: Router) { }
+  constructor(private route: Router, private todoservice: TodosService) { }
 
   addTodo() {
-    this.route.navigate(['todos/add']);
+    this.todoservice.editMode.next(false);
+    this.route.navigate(['todo/add']);
   }
 }

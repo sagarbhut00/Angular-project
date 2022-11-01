@@ -14,6 +14,8 @@ export class AddEditTodoComponent implements OnInit {
   addEditTodoForm: FormBuilder | any;
   id: any;
   submit = false;
+  todoObj: any;
+  editMode: any;
 
   constructor(private fb: FormBuilder, private todoservice: TodosService, private route: Router, private toastr: ToastrService) {
     if (localStorage.getItem('Todos') === null || localStorage.getItem('Todos') == undefined) {
@@ -21,12 +23,14 @@ export class AddEditTodoComponent implements OnInit {
       this.todoservice.setTodos(todosList);
       return;
     }
+    this.todoservice.todoObj.subscribe(res => this.todoObj = res);
+    this.todoservice.editMode.subscribe(res => this.editMode = res);
   }
 
   ngOnInit(): void {
     this.addEditTodoForm = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required]
+      title: [this.editMode ? this.todoObj.title : '', Validators.required],
+      description: [this.editMode ? this.todoObj.description : '', Validators.required]
     })
   }
 
@@ -34,28 +38,44 @@ export class AddEditTodoComponent implements OnInit {
     this.submit = true;
 
     if (this.addEditTodoForm.valid) {
-      console.log(this.addEditTodoForm);
 
       let data = this.todoservice.getTodos();
 
-      if (Object.keys(data).length === 0) {
-        this.id = 1;
+      if (!this.editMode) {
+
+        if (Object.keys(data).length === 0) {
+          this.id = 1;
+        } else {
+          this.id = Math.max(...data.map((todo: any) => todo.id)) + 1;
+        }
+
+        let obj = {
+          id: this.id,
+          title: this.addEditTodoForm.value.title,
+          description: this.addEditTodoForm.value.description,
+          date: Date(),
+          status: false
+        }
+
+        data.push(obj);
+        this.todoservice.setTodos(data);
+
+        this.toastr.success('To-Do added successfully');
       } else {
-        this.id = Math.max(...data.map((todo: any) => todo.id)) + 1;
-      }
 
-      let obj = {
-        id: this.id,
-        title: this.addEditTodoForm.value.title,
-        description: this.addEditTodoForm.value.description,
-        date: Date(),
-        status: false
-      }
+        let obj = {
+          id: this.todoObj.id,
+          title: this.addEditTodoForm.value.title,
+          description: this.addEditTodoForm.value.description,
+          date: this.todoObj.date,
+          status: this.todoObj.status
+        }
 
-      data.push(obj);
-      this.todoservice.setTodos(data);
-      this.route.navigate(['/todos']);
-      this.toastr.success('To-Do added successfully');
+        this.todoservice.editTodo(obj, data);
+        this.toastr.success('To-Do Updated successfully');
+
+      }
+      this.route.navigate(['/todo/list']);
     }
   }
 }

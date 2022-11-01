@@ -8,15 +8,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { CompletedComponent } from './completed/completed.component';
-import { ActivetodosComponent } from './activetodos/activetodos.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CompletedComponent,
-    ActivetodosComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { AfterContentChecked, AfterViewChecked, AfterViewInit, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TodosService } from './todos.service';
 
@@ -11,29 +11,52 @@ import { TodosService } from './todos.service';
 export class TodosComponent implements OnInit {
 
   todoList: any;
+  temp: any;
+  editMode: any;
+  activeCount = 0;
+  completeCount = 0;
 
-  constructor(private route: Router, private todoservice: TodosService, private toastr: ToastrService) { }
+  constructor(private route: Router, private todoservice: TodosService, private toastr: ToastrService, private active: ActivatedRoute) {
+
+    this.todoservice.editMode.subscribe(res => this.editMode = res);
+    this.todoList = this.todoservice.getTodos();
+
+  }
 
   ngOnInit(): void {
-    this.todoList = this.todoservice.getTodos();
+
+    this.active.paramMap.subscribe(param => this.temp = param.get('key'));
+    console.log(this.temp);
+
+    for (let i = 0; i < this.todoList.length; i++) {
+      if (this.todoList[i].status) {
+        this.completeCount++;
+      } else {
+        this.activeCount++;
+      }
+    }
   }
   deleteTodo(id: any) {
-    this.todoservice.deleteTodo(id);
-    this.toastr.success('To-do Deleted Successfully');
-    this.todoList = this.todoservice.getTodos();
+    if (confirm('Are you sure delete todo?')) {
+      this.activeCount--;
+      this.completeCount--;
+      this.todoservice.deleteTodo(id);
+      this.toastr.success('To-do Deleted Successfully');
+      this.todoList = this.todoservice.getTodos();
+    }
+  }
+
+  editTodo(todo: any) {
+    this.todoservice.editMode.next(true);
+    this.todoservice.todoObj.next(todo);
+    this.route.navigate([`todo/edit`, todo.id]);
   }
 
   checkedTodo(id: any, status: any) {
-    let data = this.todoservice.getTodos();
-    let arr = data.map((obj: any) => {
-      if (obj.id === id) {
-        return { ...obj, status: status ? false : true }
-      }
-      return obj;
-    })
-    this.todoservice.setTodos(arr);
+    this.activeCount--;
+    this.completeCount--;
+    this.todoservice.checkedTodo(id, status);
     this.todoList = this.todoservice.getTodos();
-    console.log(status);
     if (!status) {
       this.toastr.success('To-do Completed')
     }

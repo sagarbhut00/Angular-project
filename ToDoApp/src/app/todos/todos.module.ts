@@ -11,12 +11,22 @@ const route: Routes = [
     path: '',
     component: TodosComponent
   },
+  // {
+  //   path: 'active',
+  //   title: 'Active Todos',
+  //   component: TodosComponent
+  // },
+  // {
+  //   path: 'complete',
+  //   title: 'Completed Todos',
+  //   component: TodosComponent
+  // },
   {
     path: 'add',
     component: AddEditTodoComponent
   },
   {
-    path: 'edit',
+    path: 'edit/:id',
     component: AddEditTodoComponent
   }
 ]
@@ -33,4 +43,6 @@ const route: Routes = [
     RouterModule.forChild(route),
   ]
 })
-export class TodosModule { }
+export class TodosModule {
+  constructor() { }
+}
