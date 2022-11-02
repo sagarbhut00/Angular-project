@@ -5,19 +5,24 @@ import { HomeComponent } from './home/home.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'todo/home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'todo/home',
     title: 'Home',
     component: HomeComponent,
   },
   {
-    path: 'home',
-    title: 'Home',
-    component: HomeComponent,
-  },
-  {
-    path: 'todo/:key',
+    path: 'todo',
     title: 'Todos List',
     loadChildren: () => import('./todos/todos.module').then(m => m.TodosModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'todo/home',
   }
+
 ];
 
 @NgModule({

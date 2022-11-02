@@ -17,7 +17,7 @@
         <tr *ngFor="let item of todoList; let i = index;">
             <ng-container
                 *ngIf="(temp === 'active' && !item.status) || (temp === 'complete' && item.status) || temp === 'list'">
-                <th scope="col"><input type="checkbox" [checked]="item.status"
+                <th scope="col"><input type="checkbox" class="form-check-input" [checked]="item.status"
                         (click)="checkedTodo(item.id,item.status)">
                 </th>
                 <th scope="row" id="id">{{item.id}}</th>
@@ -25,14 +25,19 @@
                 <td>{{item.description}}</td>
                 <td>{{item.date | date : 'dd-MMM-yyyy HH:mm aa'}}</td>
                 <td>
-                    <mat-icon type="button" class="text-primary me-3" (click)="editTodo(item)">edit</mat-icon>
-                    <mat-icon type="button" class=" text-danger" (click)="deleteTodo(i)">delete</mat-icon>
+                    <i type="button" class="bi bi-pencil-square text-primary me-3 fs-4" (click)="editTodo(item)"></i>
+                    <i type="button" class="bi bi-trash3-fill text-danger fs-4" (click)="deleteTodo(i)"></i>
                 </td>
             </ng-container>
         </tr>
     </tbody>
 </table>
-<ng-container
-    *ngIf="(activeCount === 0 && temp === 'active') || (completeCount === 0 && temp === 'complete') || (todoList.length === 0 && temp === 'list')">
-    <h5 class="text-danger text-center">No To-Do Found</h5>
+<ng-container *ngIf="activeCount === 0 && temp === 'active'">
+    <h5 class="text-danger text-center">No Active ToDos</h5>
+</ng-container>
+<ng-container *ngIf="completeCount === 0 && temp === 'complete'">
+    <h5 class="text-danger text-center">No Completed ToDos</h5>
+</ng-container>
+<ng-container *ngIf="todoList.length === 0 && temp === 'list'">
+    <h5 class="text-danger text-center">No ToDos Found</h5>
 </ng-container>

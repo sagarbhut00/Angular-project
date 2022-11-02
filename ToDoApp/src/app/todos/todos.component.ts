@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterViewChecked, AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TodosService } from './todos.service';
@@ -25,8 +25,9 @@ export class TodosComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.active.paramMap.subscribe(param => this.temp = param.get('key'));
-    console.log(this.temp);
+    // this.active.paramMap.subscribe(param => this.temp = param.get('key'));
+    this.temp = /list/.test(window.location.href) ? 'list' : (/active/.test(window.location.href) ? 'active' : 'complete');
+    this.todoservice.key.next(this.temp);
 
     for (let i = 0; i < this.todoList.length; i++) {
       if (this.todoList[i].status) {
@@ -58,7 +59,9 @@ export class TodosComponent implements OnInit {
     this.todoservice.checkedTodo(id, status);
     this.todoList = this.todoservice.getTodos();
     if (!status) {
-      this.toastr.success('To-do Completed')
+      this.toastr.success('To-do Completed');
+    } else {
+      this.toastr.success('To-do Active');
     }
   }
 

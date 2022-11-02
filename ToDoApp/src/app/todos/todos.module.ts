@@ -8,25 +8,27 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 const route: Routes = [
   {
-    path: '',
+    path: 'list',
     component: TodosComponent
   },
-  // {
-  //   path: 'active',
-  //   title: 'Active Todos',
-  //   component: TodosComponent
-  // },
-  // {
-  //   path: 'complete',
-  //   title: 'Completed Todos',
-  //   component: TodosComponent
-  // },
+  {
+    path: 'active',
+    title: 'Active Todos',
+    component: TodosComponent
+  },
+  {
+    path: 'complete',
+    title: 'Completed Todos',
+    component: TodosComponent
+  },
   {
     path: 'add',
+    title: 'Add Todo',
     component: AddEditTodoComponent
   },
   {
     path: 'edit/:id',
+    title: 'Edit Todo',
     component: AddEditTodoComponent
   }
 ]
