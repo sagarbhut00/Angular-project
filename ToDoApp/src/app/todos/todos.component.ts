@@ -12,13 +12,12 @@ export class TodosComponent implements OnInit {
 
   todoList: any;
   temp: any;
-  editMode: any;
   activeCount = 0;
   completeCount = 0;
 
   constructor(private route: Router, private todoservice: TodosService, private toastr: ToastrService, private active: ActivatedRoute) {
 
-    this.todoservice.editMode.subscribe(res => this.editMode = res);
+
     this.todoList = this.todoservice.getTodos();
 
   }
@@ -27,7 +26,6 @@ export class TodosComponent implements OnInit {
 
     // this.active.paramMap.subscribe(param => this.temp = param.get('key'));
     this.temp = /list/.test(window.location.href) ? 'list' : (/active/.test(window.location.href) ? 'active' : 'complete');
-    this.todoservice.key.next(this.temp);
 
     for (let i = 0; i < this.todoList.length; i++) {
       if (this.todoList[i].status) {
@@ -46,9 +44,11 @@ export class TodosComponent implements OnInit {
       this.todoList = this.todoservice.getTodos();
     }
   }
+  addTodo() {
+    this.route.navigate(['todo/add']);
+  }
 
   editTodo(todo: any) {
-    this.todoservice.editMode.next(true);
     this.todoservice.todoObj.next(todo);
     this.route.navigate([`todo/edit`, todo.id]);
   }

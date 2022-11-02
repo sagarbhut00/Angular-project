@@ -40,9 +40,9 @@ export class AddupdateComponent implements OnInit {
     }
 
     this.addEditUserForm = this.fb.group({
-      firstname: [this.editMode ? this.userdata.firstname : '', Validators.required],
-      lastname: [this.editMode ? this.userdata.lastname : '', Validators.required],
-      username: [this.editMode ? this.userdata.username : '', Validators.required],
+      firstname: [this.editMode ? this.userdata.firstname : '', [Validators.required, Validators.pattern("^[a-zA-Z].*")]],
+      lastname: [this.editMode ? this.userdata.lastname : '', [Validators.required, Validators.pattern("^[a-zA-Z].*")]],
+      username: [this.editMode ? this.userdata.username : '', [Validators.required, Validators.pattern("^[a-zA-Z0-9].*")]],
       password: [this.editMode ? this.userdata.password : '', [Validators.required, Validators.pattern("^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,12}$")]]
     });
 

@@ -17,3 +17,7 @@ a {
     content: ' *';
     display: inline;
 }
+
+textarea {
+    resize: none;
+}

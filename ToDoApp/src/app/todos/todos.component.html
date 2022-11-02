@@ -1,3 +1,8 @@
+<div class="container d-flex justify-content-end">
+    <button class="btn btn-primary mt-3 fw-semibold" (click)="addTodo()"
+        style="background-color: #ff8800; color:black">+
+        Add Todo</button>
+</div>
 <div>
     <h1>{{temp === 'active' ? 'Active' : temp === 'complete' ? 'Completed' : ''}} Todo List</h1>
 </div>
@@ -6,11 +11,11 @@
     <thead>
         <tr style="background-color: rgba(255, 191, 0, 0.297);">
             <th></th>
-            <th scope="col">Id</th>
+            <th scope="col">ID</th>
             <th scope="col">Name</th>
             <th scope="col">Description</th>
             <th scope="col">Created Date</th>
-            <th scope="col">Action</th>
+            <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>

@@ -10,6 +10,7 @@ import { TodosService } from './todos/todos.service';
 export class AppComponent {
   title = 'ToDoApp';
 
+
   constructor(private route: Router, private todoservice: TodosService) {
     if (localStorage.getItem('Todos') === null || localStorage.getItem('Todos') == undefined) {
       let todosList: any = [];
@@ -18,8 +19,5 @@ export class AppComponent {
     }
   }
 
-  addTodo() {
-    this.todoservice.editMode.next(false);
-    this.route.navigate(['todo/add']);
-  }
+
 }

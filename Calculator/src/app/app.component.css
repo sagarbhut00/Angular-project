@@ -1,0 +1,11 @@
+.topbar {
+    background-color: orange;
+    height: 50px;
+    color: black;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 30px;
+    font-weight: 700;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

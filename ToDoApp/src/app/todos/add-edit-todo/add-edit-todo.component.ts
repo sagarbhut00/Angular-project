@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TodosService } from '../todos.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-add-edit-todo',
@@ -15,19 +16,25 @@ export class AddEditTodoComponent implements OnInit {
   id: any;
   submit = false;
   todoObj: any;
-  editMode: any;
-  key: any;
+  todoId: any;
 
-  constructor(private fb: FormBuilder, private todoservice: TodosService, private route: Router, private toastr: ToastrService) {
+  constructor(
+    private fb: FormBuilder,
+    private todoservice: TodosService,
+    private route: Router,
+    private toastr: ToastrService,
+    public location: Location,
+    private activeroute: ActivatedRoute
+  ) {
     this.todoservice.todoObj.subscribe(res => this.todoObj = res);
-    this.todoservice.editMode.subscribe(res => this.editMode = res);
-    this.todoservice.key.subscribe(res => this.key = res);
+
+    this.activeroute.paramMap.subscribe(param => this.todoId = param.get('id'));
   }
 
   ngOnInit(): void {
     this.addEditTodoForm = this.fb.group({
-      title: [this.editMode ? this.todoObj.title : '', Validators.required],
-      description: [this.editMode ? this.todoObj.description : '', Validators.required]
+      title: [this.todoId !== null ? this.todoObj.title : '', [Validators.required, Validators.pattern("^[a-zA-Z].*")]],
+      description: [this.todoId !== null ? this.todoObj.description : '', [Validators.required, Validators.pattern("^[a-zA-Z].*")]]
     })
   }
 
@@ -38,7 +45,7 @@ export class AddEditTodoComponent implements OnInit {
 
       let data = this.todoservice.getTodos();
 
-      if (!this.editMode) {
+      if (!this.todoId) {
 
         if (Object.keys(data).length === 0) {
           this.id = 1;
@@ -48,8 +55,8 @@ export class AddEditTodoComponent implements OnInit {
 
         let obj = {
           id: this.id,
-          title: this.addEditTodoForm.value.title,
-          description: this.addEditTodoForm.value.description,
+          title: this.addEditTodoForm.value.title.replace(/\s+/g, ' ').trim(),
+          description: this.addEditTodoForm.value.description.replace(/\s+/g, ' ').trim(),
           date: Date(),
           status: false
         }
@@ -62,8 +69,8 @@ export class AddEditTodoComponent implements OnInit {
 
         let obj = {
           id: this.todoObj.id,
-          title: this.addEditTodoForm.value.title,
-          description: this.addEditTodoForm.value.description,
+          title: this.addEditTodoForm.value.title.replace(/\s+/g, ' ').trim(),
+          description: this.addEditTodoForm.value.description.replace(/\s+/g, ' ').trim(),
           date: this.todoObj.date,
           status: this.todoObj.status
         }
@@ -72,11 +79,7 @@ export class AddEditTodoComponent implements OnInit {
         this.toastr.success('To-Do Updated successfully');
 
       }
-      this.route.navigate([`/todo/${this.key}`]);
+      this.location.back();
     }
-  }
-
-  cancel() {
-    this.route.navigate([`/todo/${this.key}`]);
   }
 }

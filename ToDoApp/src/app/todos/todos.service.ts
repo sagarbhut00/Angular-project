@@ -6,9 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class TodosService {
 
-  editMode = new BehaviorSubject(false);
   todoObj = new BehaviorSubject('');
-  key = new BehaviorSubject('');
 
   constructor() { }
 
@@ -35,7 +33,6 @@ export class TodosService {
     })
     this.setTodos(arr);
     this.todoObj.next('');
-    this.editMode.next(false);
   }
   checkedTodo(id: any, status: any) {
     let data = this.getTodos();

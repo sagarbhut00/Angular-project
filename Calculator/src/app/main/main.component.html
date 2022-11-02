@@ -1,0 +1,43 @@
+<div class="row justify-content-center align-items-center mt-3 m-auto">
+    <div class="col-6 col-lg-9 col-xl-7 box" style="display: contents;">
+        <form class="bg-dark rounded p-3 mt-3 shadow">
+            <label for="ans" class="">{{answer}}</label>
+            <table class="mt-2 text-light">
+                <tr>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3 specialbtn" (click)="clearAll()">AC</button>
+                    </td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3 specialbtn" (click)="clear()"><i
+                                class="bi bi-backspace fs-4"></i></button>
+                    </td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3 specialbtn">+/-</button></td>
+                    <td><button type="button" class="btn btn-lg mt-3 specialbtn" (click)="func('/')">➗</button></td>
+                </tr>
+                <tr>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('1')">1</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('2')">2</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('3')">3</button></td>
+                    <td><button type="button" class="btn btn-lg mt-3 specialbtn" (click)="func('*')">✖</button></td>
+                </tr>
+                <tr>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('4')">4</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('5')">5</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('6')">6</button></td>
+                    <td><button type="button" class="btn btn-lg mt-3 specialbtn" (click)="func('-')">➖</button></td>
+                </tr>
+                <tr>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('7')">7</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('8')">8</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('9')">9</button></td>
+                    <td><button type="button" class="btn btn-lg mt-3 specialbtn" (click)="func('+')">➕</button></td>
+                </tr>
+                <tr>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('%')">%</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('0')">0</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3">.</button></td>
+                    <td><button type="button" class="btn btn-lg mt-3 equlbtn" (click)="ansFunction()">=</button></td>
+                </tr>
+            </table>
+
+        </form>
+    </div>
+</div>

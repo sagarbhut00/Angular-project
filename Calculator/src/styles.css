@@ -1,0 +1,12 @@
+body {
+    background-color: #d6cda2;
+    background-image: linear-gradient(43deg, #d6cda2 0%, #c5bec4 46%, #c3b29b 100%);
+}
+
+html {
+    height: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
