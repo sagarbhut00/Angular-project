@@ -1,5 +1,5 @@
-div.box {
-    box-shadow: 20px 20px 50px 15px gray;
+.box {
+    box-shadow: 9px 0px 30px 15px grey;
 }
 
 .btn {
@@ -11,16 +11,18 @@ div.box {
     font-size: 30px;
 }
 
-label {
+.ans {
     background-color: white;
     border-radius: 10px;
     height: 100px;
+    width: 556px;
     display: flex;
-    align-items: center;
+    align-items: end;
     justify-content: flex-end;
     padding-right: 10px;
     font-size: 40px;
     font-weight: 500;
+    overflow: hidden;
 }
 
 .equlbtn {

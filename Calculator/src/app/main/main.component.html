@@ -1,7 +1,9 @@
 <div class="row justify-content-center align-items-center mt-3 m-auto">
     <div class="col-6 col-lg-9 col-xl-7" style="display: contents;">
-        <form class="bg-dark rounded p-3 mt-3">
-            <label for="ans" class="">{{input }}</label>
+        <form class="bg-dark rounded p-3 mt-3 box">
+            <div for="ans" class="ans">
+                <p>{{input }}</p>
+            </div>
             <table class="mt-2 text-light">
                 <tr>
                     <td><button type="button" class="btn btn-lg me-3 mt-3 specialbtn" (click)="clearAll()">AC</button>
@@ -9,38 +11,38 @@
                     <td><button type="button" class="btn btn-lg me-3 mt-3 specialbtn" (click)="clear()"><i
                                 class="bi bi-backspace fs-4"></i></button>
                     </td>
-                    <td><button type="button" class="btn btn-lg me-3 mt-3 specialbtn" (click)="plusMinus()">+/-</button>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3 specialbtn" [disabled]="!do" (click)="plusMinus()">+/-</button>
                     </td>
-                    <td><button type="button" class="btn btn-lg mt-3 specialbtn" (click)="opratorFunc('/')">➗</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('7')">7</button></td>
-                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('8')">8</button></td>
-                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('9')">9</button></td>
-                    <td><button type="button" class="btn btn-lg mt-3 specialbtn" (click)="opratorFunc('*')">✖</button>
+                    <td><button type="button" class="btn btn-lg mt-3 specialbtn" [disabled]="!do" (click)="opratorFunc('/')">➗</button>
                     </td>
                 </tr>
                 <tr>
-                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('4')">4</button></td>
-                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('5')">5</button></td>
-                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('6')">6</button></td>
-                    <td><button type="button" class="btn btn-lg mt-3 specialbtn" (click)="opratorFunc('-')">➖</button>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="numberFunc('7')">7</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="numberFunc('8')">8</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="numberFunc('9')">9</button></td>
+                    <td><button type="button" class="btn btn-lg mt-3 specialbtn" [disabled]="!do" (click)="opratorFunc('*')">✖</button>
                     </td>
                 </tr>
                 <tr>
-                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('1')">1</button></td>
-                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('2')">2</button></td>
-                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('3')">3</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="numberFunc('4')">4</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="numberFunc('5')">5</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="numberFunc('6')">6</button></td>
+                    <td><button type="button" class="btn btn-lg mt-3 specialbtn" [disabled]="!do" (click)="opratorFunc('-')">➖</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="numberFunc('1')">1</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="numberFunc('2')">2</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="numberFunc('3')">3</button></td>
 
-                    <td><button type="button" class="btn btn-lg mt-3 specialbtn" (click)="opratorFunc('+')">➕</button>
+                    <td><button type="button" class="btn btn-lg mt-3 specialbtn" [disabled]="!do" (click)="opratorFunc('+')">➕</button>
                     </td>
                 </tr>
                 <tr>
-                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="opratorFunc('%')">%</button>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" [disabled]="!do" (click)="modulo()">%</button>
                     </td>
-                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('0')">0</button></td>
-                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="func('.')">.</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" (click)="numberFunc('0')">0</button></td>
+                    <td><button type="button" class="btn btn-lg me-3 mt-3" [disabled]="!do" (click)="pointFunc()">.</button></td>
                     <td><button type="button" class="btn btn-lg mt-3 equlbtn" (click)="equalFunction()">=</button>
                     </td>
                 </tr>

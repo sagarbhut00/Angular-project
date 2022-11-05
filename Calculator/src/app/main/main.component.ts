@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-main',
@@ -7,28 +8,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  input = '';
+  input = '0';
   answer = false;
+  do = true;
   opratorArr = ['+', '-', '*', '/', '%'];
 
-  constructor() { }
+  constructor(private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
 
-  func(val: any) {
-    if (this.input.length < 15) {
+  numberFunc(val: any) {
+    let pos = this.getLastPosOpIndex();
+    let subStr = this.input.substring(pos, this.input.length);
+
+    if (subStr.length < 15 || !this.do) {
       if (this.answer && this.input !== '') {
         this.input = ''
         this.answer = false;
+        this.do = true;
       }
       let lastChar = this.input.charAt(this.input.length - 1);
-      let pos = this.getLastPosOpIndex();
       if (val === '0') {
         if (this.opratorArr.includes(lastChar)) {
           this.input += val;
         }
         else if (this.input.charAt(pos + 1) !== '0') {
+          this.input += val;
+        }
+        else if (this.input.charAt(pos + 2) === '.') {
           this.input += val;
         }
         if (this.input === '') {
@@ -38,13 +46,16 @@ export class MainComponent implements OnInit {
         if (this.input.charAt(pos + 1) !== '0') {
           this.input += val;
         } else {
-          this.input = this.input.replace(/.$/, val);
+          if (this.input.charAt(pos + 2) === '.') {
+            this.input += val;
+          } else {
+            this.input = this.input.replace(/.$/, val);
+          }
         }
       }
     }
   }
   opratorFunc(val: any) {
-
     if (this.input !== '') {
       this.answer = false;
       let lastChar = this.input.charAt(this.input.length - 1);
@@ -58,30 +69,87 @@ export class MainComponent implements OnInit {
   }
 
   plusMinus() {
-    let lastChar = this.input.charAt(this.input.length - 1);
-    console.log(lastChar);
-    let temp = lastChar === '+' ? '-' : '+';
-    this.input = this.input.replace(lastChar, temp);
+    let index = this.getLastPosOpIndex();
+    let lastChar = this.input.charAt(index);
+    if (this.input !== '') {
+      this.answer = false;
+      if (this.input.length - index === 1) {
+        return
+      }
+      else if (['+', '-'].includes(lastChar)) {
+        let temp = lastChar === '+' ? '-' : '+';
+        this.input = this.input.substring(0, index) + temp + this.input.substring(index + 1, this.input.length);
+      } else {
+        let temp = lastChar === '+' ? '-' : lastChar === '-' ? '+' : '-';
+        this.input = this.input.substring(0, index + 1) + temp + this.input.substring(index + 1, this.input.length);
+      }
+    }
   }
 
+  pointFunc() {
+    let pos = this.getLastPosOpIndex();
+    let subStr = this.input.substring(pos, this.input.length);
+    if (subStr.length < 15) {
+      if (this.answer && this.input !== '') {
+        this.input = '';
+        console.log(this.input);
+        this.answer = false;
+      }
+      if (subStr.includes('.')) {
+        return
+      } else if (subStr.length < 2 && this.input.length > 2) {
+        this.input = this.input.substring(0, pos) + subStr + '0.';
+      }
+      else {
+        this.input = this.input.substring(0, pos) + subStr + '.';
+      }
+    }
+  }
   equalFunction() {
     if (!this.answer) {
       let lastChar = this.input.charAt(this.input.length - 1);
-      if (this.opratorArr.includes(lastChar)) {
+      while (this.opratorArr.includes(lastChar)) {
         this.input = this.input.slice(0, -1);
+        lastChar = this.input.charAt(this.input.length - 1);
       }
+      this.input = eval(this.input).toString();
+      if (this.input === 'Infinity' || this.input === '-Infinity') {
+        this.input = 'Cannot divide by zero';
+        this.do = false;
+      }
+      this.answer = true;
+    }
+    else if (!this.do) {
+      this.input = '0';
+    }
+  }
+  modulo() {
+    let lastChar = this.input.charAt(this.input.length - 1);
+    if (this.opratorArr.includes(lastChar)) {
+      return
+    } else {
+      this.input = this.input + '/100';
       this.input = eval(this.input).toString();
       this.answer = true;
     }
   }
 
   clearAll() {
-    this.input = '';
+    this.input = '0';
+    this.do = true;
     this.answer = false;
   }
 
   clear() {
-    this.input = this.input.slice(0, -1);
+    if (this.answer) {
+      this.input = '0';
+      this.do = true;
+    } else {
+      this.input = this.input.slice(0, -1);
+      if (this.input.length === 0) {
+        this.input = '0';
+      }
+    }
   }
 
   getLastPosOpIndex() {
