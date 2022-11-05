@@ -1,0 +1,12 @@
+<form class="bg-light p-3 rounded shadow" [formGroup]="loginForm" (submit)="onSubmit()">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" formControlName="email">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" name="password" class="form-control" id="password" formControlName="password"> 
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a [routerLink]="['/register']">Register</a>
+  </form>
