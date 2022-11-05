@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class ApputilityService {
 
   editMode = new BehaviorSubject(false);
-  user = new BehaviorSubject('');
+  user = new BehaviorSubject(null);
   loggedIn = new BehaviorSubject('Login');
 
   constructor() { }

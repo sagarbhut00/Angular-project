@@ -17,7 +17,14 @@ export class LoginformComponent implements OnInit {
   id: any;
   user: any;
 
-  constructor(private fb: FormBuilder, private appservice: ApputilityService, private route: Router, private toastr: ToastrService) { }
+  constructor(private fb: FormBuilder,
+    private appservice: ApputilityService,
+    private route: Router,
+    private toastr: ToastrService) {
+    // if(user){
+
+    // }
+  }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({

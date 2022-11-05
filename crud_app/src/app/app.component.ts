@@ -30,12 +30,12 @@ export class AppComponent implements OnInit {
     this.appservice.loggedIn.subscribe((res) => this.loggedIn = res)
     this.appservice.autoLogin();
 
-    if (this.loggedIn === 'Login' && !(/login/.test(window.location.href))) {
-      this.route.navigate(['/login']);
-    }
-    if (this.loggedIn === 'Logout' && (/login/.test(window.location.href))) {
-      this.route.navigate(['/home']);
-    }
+    // if (this.loggedIn === 'Login' && !(/login/.test(window.location.href))) {
+    //   this.route.navigate(['/login']);
+    // }
+    // if (this.loggedIn === 'Logout' && (/login/.test(window.location.href))) {
+    //   this.route.navigate(['/home']);
+    // }
   }
 
   redirect() {
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
       this.route.navigate(['/login']);
     } else {
       localStorage.removeItem('LoginData');
-      this.appservice.user.next('');
+      this.appservice.user.next(null);
       this.appservice.loggedIn.next('Login');
       this.route.navigate(['/login']);
       this.toastr.success('Logout successfully');
