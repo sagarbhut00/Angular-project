@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { User } from '../appModel/user.model';
@@ -7,13 +8,23 @@ import { User } from '../appModel/user.model';
 })
 export class AuthService {
 
-  user = new Subject<User>();
+  user = new BehaviorSubject<User>(null!);
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  setLoginDataLocal(obj: any) {
-    localStorage.setItem('LoginData', JSON.stringify(obj));
+  getLoginToken(){
+   return localStorage.getItem('Token');
+  }
+  setLoginToken(token: any) {
+    localStorage.setItem('Token', JSON.stringify(token));
   }
 
 
+  setRegisterData(obj:FormData) {
+    return this.http.post<any>('http://192.168.0.166/laravel-sanctum-api/public/api/register', obj);
+  }
+
+  checkLoginData(obj:FormData){
+    return this.http.post<any>('http://192.168.0.166/laravel-sanctum-api/public/api/login', obj);
+  }
 }

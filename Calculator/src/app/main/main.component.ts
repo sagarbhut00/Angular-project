@@ -79,7 +79,8 @@ export class MainComponent implements OnInit {
       else if (['+', '-'].includes(lastChar)) {
         let temp = lastChar === '+' ? '-' : '+';
         this.input = this.input.substring(0, index) + temp + this.input.substring(index + 1, this.input.length);
-      } else {
+      }
+      else {
         let temp = lastChar === '+' ? '-' : lastChar === '-' ? '+' : '-';
         this.input = this.input.substring(0, index + 1) + temp + this.input.substring(index + 1, this.input.length);
       }
@@ -117,6 +118,10 @@ export class MainComponent implements OnInit {
         this.input = 'Cannot divide by zero';
         this.do = false;
       }
+      if (this.input === 'NaN') {
+        this.input = 'Result Is Undefined';
+        this.do = false;
+      }
       this.answer = true;
     }
     else if (!this.do) {
@@ -128,6 +133,7 @@ export class MainComponent implements OnInit {
     if (this.opratorArr.includes(lastChar)) {
       return
     } else {
+      this.input = eval(this.input).toString();
       this.input = this.input + '/100';
       this.input = eval(this.input).toString();
       this.answer = true;

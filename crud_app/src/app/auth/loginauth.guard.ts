@@ -17,7 +17,6 @@ export class LoginauthGuard implements CanActivate {
       take(1),
       map(user => {
         if (user) {
-          alert('Already Login!');
           return this.router.createUrlTree(['/home']);
         }
         return true;
