@@ -1,0 +1,83 @@
+<h1 class="text-center mt-3 text-warning">Sign Up</h1>
+
+<div class="mt-4">    
+    <form class="row g-3 p-3 rounded shadow" (ngSubmit)="onSubmit()" [formGroup]="signupForm">
+        <div class="col-md-6">
+            <label for="firstname" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstname" name="first_name" formControlName="first_name">
+            <small class="text-danger" *ngIf="
+                    signupForm.get('first_name').invalid &&
+                    (signupForm.get('first_name').touched || submit)
+                  ">*First Name is
+                Required.</small>
+        </div>
+        <div class="col-md-6">
+            <label for="lastname" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastname" name="last_name" formControlName="last_name">
+            <small class="text-danger" *ngIf="
+                    signupForm.get('last_name').invalid &&
+                    (signupForm.get('last_name').touched || submit)
+                  ">*Last Name is
+                Required.</small>
+        </div>
+        <div class="col-md-6">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" formControlName="name">
+            <small class="text-danger" *ngIf="
+                    signupForm.get('name').invalid &&
+                    (signupForm.get('name').touched || submit)
+                  ">*Name is
+                Required.</small>
+        </div>
+        <div class="col-md-6">
+            <label for="username" class="form-label">User Name</label>
+            <input type="text" class="form-control" id="username" name="user_name" formControlName="user_name">
+            <small class="text-danger" *ngIf="
+                    signupForm.get('user_name').invalid &&
+                    (signupForm.get('user_name').touched || submit)
+                  ">*Username is
+                Required.</small>
+        </div>
+        <div class="col-md-6">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control" id="email" name="email" formControlName="email">
+            <small class="text-danger" *ngIf="
+                    signupForm.get('email').invalid &&
+                    (signupForm.get('email').touched || submit)
+                  ">*Email is
+                Required.</small>
+        </div>
+        <div class="col-md-6">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" maxlength="12"
+                formControlName="password">
+            <ng-container *ngIf="signupForm.get('password').invalid && (signupForm.get('password').touched || submit)">
+
+                <small *ngIf="signupForm.get('password').errors?.['required']" class="text-danger">*Password is
+                    Required.</small>
+                <small *ngIf="signupForm.get('password').dirty && signupForm.get('password').errors?.['pattern']"
+                    class="text-danger">
+                    *Password must contain at least
+                    <pre>One Uppercase latter, One Lowercase latter
+One Digit, One special character required.</pre>
+                </small>
+            </ng-container>
+        </div>
+        <div class="col-md-6">
+            <label for="profile_image" class="form-label">Choose Profile Picture</label>
+            <input type="file" class="form-control" id="profile_image" name="profile_image" accept="image/*"
+                (change)="onFileSelect($event)">
+        </div>
+        <small class="text-danger" *ngIf="
+                    signupForm.get('profile_image').invalid &&
+                    (signupForm.get('profile_image').touched || submit)
+                  ">*Profile Photo is
+            Required.</small>
+
+        <div class="col-12 d-flex align-items-center">
+            <button type="submit" class="btn btn-primary me-3">Sign Up</button>
+            If already Login <a style="text-decoration: none;margin-left: 10px;" [routerLink]="['/signin']"
+                routerLinkActive="router-link-active"> Sign In</a>
+        </div>
+    </form>
+</div>

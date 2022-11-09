@@ -1,0 +1,9 @@
+::ng-deep .tooltip {
+    font-size: 13px;
+    padding: 2px;
+  }
+::ng-deep .tooltip-delete {
+    background: red;
+    font-size: 13px;
+    padding: 2px;
+  }

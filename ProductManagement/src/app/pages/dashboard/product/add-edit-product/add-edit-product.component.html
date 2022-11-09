@@ -1,0 +1,58 @@
+<h1 class="text-center mt-3" style="color: #ff6707cc;">Add Product</h1>
+
+<div class="mt-4">    
+    <form class="row g-3 p-3 rounded shadow" (ngSubmit)="add()" [formGroup]="addProductForm">
+        <div class="col-md-12">
+            <label for="name" class="form-label">Product Name</label>
+            <input type="text" class="form-control" id="name" name="name" formControlName="name">
+            <small class="text-danger" *ngIf="
+                    addProductForm.get('name').invalid &&
+                    (addProductForm.get('name').touched || submit)
+                  ">*Product Name is
+                Required.</small>
+        </div>
+        <div class="col-md-12">
+            <label for="slug" class="form-label">Slogen</label>
+            <input type="text" class="form-control" id="slug" name="slug" formControlName="slug">
+            <small class="text-danger" *ngIf="
+                    addProductForm.get('slug').invalid &&
+                    (addProductForm.get('slug').touched || submit)
+                  ">*Slogen is
+                Required.</small>
+        </div>
+        <div class="col-md-12">
+            <label for="description" class="form-label">Description</label>
+            <textarea type="text" class="form-control" id="description" name="description" formControlName="description" rows="2"></textarea>
+            <small class="text-danger" *ngIf="
+                    addProductForm.get('description').invalid &&
+                    (addProductForm.get('description').touched || submit)
+                  ">*Description is
+                Required.</small>
+        </div>
+        <div class="col-md-12">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" class="form-control" id="price" name="price" formControlName="price" >
+            <small class="text-danger" *ngIf="
+                    addProductForm.get('price').invalid &&
+                    (addProductForm.get('price').touched || submit)
+                  ">*Price is
+                Required.</small>
+        </div>
+        
+        <div class="col-md-6">
+            <label for="image" class="form-label">Choose Product Picture</label>
+            <input type="file" class="form-control" id="image" name="image" accept="image/*"
+                (change)="onFileSelect($event)" formControlName="image">
+        </div>
+        <small class="text-danger" *ngIf="
+                    addProductForm.get('image').invalid &&
+                    (addProductForm.get('image').touched || submit)
+                  ">*Product Photo is
+            Required.</small>
+
+        <div class="col-12 d-flex align-items-center">
+            <button type="submit" class="btn btn-primary me-3">Add</button>
+            <a style="text-decoration: none;margin-left: 10px; color: blue;" type="button" (click)="location.back()">Cancel</a>
+        </div>
+    </form>
+</div>

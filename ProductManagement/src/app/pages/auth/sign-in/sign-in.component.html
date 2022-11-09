@@ -1,0 +1,31 @@
+<h1 class="text-center mt-3 text-warning">Sign In</h1>
+<div class="mt-4">
+  <form class="p-3 rounded shadow" (submit)="onSubmit()" [formGroup]="signinForm">
+    <div class="">
+      <label for="email" class="form-label">Email address</label>
+      <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp"
+        formControlName="email">
+    </div>
+    <small class="text-danger" *ngIf="
+    signinForm.get('email').invalid &&
+    (signinForm.get('email').touched || submit)
+    ">*Username is
+      Required.</small>
+    <div class="mt-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" name="password" class="form-control" id="password" formControlName="password">
+    </div>
+    <ng-container *ngIf="signinForm.get('password').invalid && (signinForm.get('password').touched || submit)">
+
+      <small *ngIf="signinForm.get('password').errors?.['required']" class="text-danger">*Password is
+        Required.</small>
+    </ng-container>
+    <div class="col-12 d-flex align-items-center mt-3">
+      <button type="submit" class="btn btn-primary me-2">Sign In</button>
+      <a style="text-decoration: none;" [routerLink]="['/signup']" routerLinkActive="router-link-active">Sign Up</a>
+    </div>
+    
+  </form>
+  <h4 class=" text-primary text-center" *ngIf="message.length !== 0">{{message}}</h4>
+
+</div>

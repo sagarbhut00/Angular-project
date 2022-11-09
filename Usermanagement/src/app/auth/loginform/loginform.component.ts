@@ -27,7 +27,6 @@ export class LoginformComponent implements OnInit {
   }
 
   onSubmit() {
-
     this.submit = true;
     if (this.loginForm.valid) {
       this.router.navigate(['/home']);
