@@ -1,54 +1,59 @@
 <div class="container d-flex justify-content-end mb-3">
-    <button class="btn btn-primary mt-3 fw-bold" style="background-color: #ff8800; color:black" (click)="addProduct()">+
-        Add Product</button>
+  <button class="btn btn-primary mt-3 fw-bold" style="background-color: #ff8800; color:black" (click)="addProduct()">+
+    Add Product</button>
 </div>
 <div>
-    <h1>Products List</h1>
+  <h1>Products List</h1>
 </div>
 <hr>
 <table class="table table-striped border table-hover">
-    <thead>
-      <tr style="background-color: rgba(255, 191, 0, 0.297);">
-        <th scope="col">Sr No.</th>
-        <th scope="col">Name</th>
-        <th scope="col">Price</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Apple</td>
-        <td>$100 /kg</td>
-        <td>
-            <i type="button" class="bi bi-eye-fill fs-4 me-3" style="color: #ff6a00;" 
-            data-bs-toggle="modal" data-bs-target="#exampleModal" mat-raised-button
-            matTooltip="View Product" matTooltipClass="tooltip"></i>
-            <i type="button" class="bi bi-pencil-square text-primary fs-4 me-3" mat-raised-button
-            matTooltip="Edit Product" matTooltipClass="tooltip"></i>
-            <i type="button" class="bi bi-trash3-fill text-danger fs-4" mat-raised-button
-            matTooltip="Delete Product" matTooltipClass="tooltip-delete"></i>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <thead>
+    <tr style="background-color: rgba(255, 191, 0, 0.297);">
+      <th scope="col">Sr No.</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of productList;let i=index">
+      <th scope="row">{{item.id}}</th>
+      <td>{{item.name}}</td>
+      <td>&#8377;{{item.price | number}}</td>
+      <td>
+        <i type="button" class="bi bi-eye-fill fs-4 me-3" style="color: #ff6a00;" data-bs-toggle="modal"
+          data-bs-target="#exampleModal" mat-raised-button matTooltip="View Product" matTooltipClass="tooltip"
+          (click)="viewProduct(item)"></i>
+        <i type="button" class="bi bi-pencil-square text-primary fs-4 me-3" mat-raised-button matTooltip="Edit Product"
+          matTooltipClass="tooltip" (click)="editProduct(item)"></i>
+        <i type="button" class="bi bi-trash3-fill text-danger fs-4" mat-raised-button matTooltip="Delete Product"
+          matTooltipClass="tooltip-delete" (click)="deleteProduct(i,item)"></i>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Apple</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">{{product.name}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div style="width:50% ;height:50%" class="d-flex">
+          <img src="{{product.image}}" alt="" class="img-thumbnail">
         </div>
-        <div class="modal-body">
-          <p>Very Good Product</p>
-          <p>$100/kg</p>
+        <div class="mt-2">
+          <p><strong>Description :</strong> {{product.description}}</p>
+          <p><strong>Slogen :</strong> {{product.slug}}</p>
+          <p><strong>Price :</strong> &#8377;{{product.price | number}}</p>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
+</div>

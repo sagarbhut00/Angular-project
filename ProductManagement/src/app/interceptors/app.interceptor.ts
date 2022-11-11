@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import { catchError, Observable, retry, throwError } from 'rxjs';
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let token = localStorage.getItem('Token');
-        
+
         if (!token) {
             return next.handle(req);
         }
@@ -16,7 +16,6 @@ export class AppInterceptor implements HttpInterceptor {
                 "authorization": 'Bearer ' + token
             }
         })
-        console.log(modifiedReq);
         return next.handle(modifiedReq);
     }
 }

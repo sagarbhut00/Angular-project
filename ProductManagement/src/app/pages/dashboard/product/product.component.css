@@ -7,3 +7,8 @@
     font-size: 13px;
     padding: 2px;
   }
+  .modal-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }

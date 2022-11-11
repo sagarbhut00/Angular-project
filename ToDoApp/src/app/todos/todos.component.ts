@@ -35,6 +35,16 @@ export class TodosComponent implements OnInit {
       }
     }
   }
+  
+  addTodo() {
+    this.route.navigate(['todo/add']);
+  }
+
+  editTodo(todo: any) {
+    this.todoservice.todoObj.next(todo);
+    this.route.navigate([`todo/edit`, todo.id]);
+  }
+  
   deleteTodo(id: any) {
     if (confirm('Are you sure delete todo?')) {
       this.activeCount--;
@@ -43,14 +53,6 @@ export class TodosComponent implements OnInit {
       this.toastr.success('To-do Deleted Successfully');
       this.todoList = this.todoservice.getTodos();
     }
-  }
-  addTodo() {
-    this.route.navigate(['todo/add']);
-  }
-
-  editTodo(todo: any) {
-    this.todoservice.todoObj.next(todo);
-    this.route.navigate([`todo/edit`, todo.id]);
   }
 
   checkedTodo(id: any, status: any) {

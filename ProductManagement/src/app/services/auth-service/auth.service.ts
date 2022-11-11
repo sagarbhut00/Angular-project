@@ -27,13 +27,12 @@ export class AuthService {
   }
 
   signIn(data: FormData) {
-    this.http.post<any>(environment.baseApi +  'login', data).subscribe(res => {
-      this.setToken(res.data.token)
-    });
-    this.signinMessage.next('Trying to SignIn....');
-    setTimeout(() => {
+    this.http.post<any>(environment.baseApi + 'login', data).subscribe(res => {
+      this.setToken(res.data.token);
       this.router.navigate(['dashboard']);
-      this.signinMessage.next('');
-    }, 250);
+    },
+    error => {
+        return this.signinMessage.next('Email or Password invalid');
+      });
   }
 }

@@ -21,7 +21,7 @@ export class AddEditTodoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private todoservice: TodosService,
-    private route: Router,
+    private router: Router,
     private toastr: ToastrService,
     public location: Location,
     private activeroute: ActivatedRoute
