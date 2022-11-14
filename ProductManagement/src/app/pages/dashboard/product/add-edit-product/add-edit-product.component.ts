@@ -28,9 +28,9 @@ export class AddEditProductComponent implements OnInit {
     this.addProductForm = this.fb.group({
       name: [this.prodId ? this.productObj.name : '', [Validators.required,Validators.pattern("^[a-zA-z].*")]],
       slug: [{value : this.prodId ? this.productObj.slug : '', disabled: this.prodId}, [Validators.required,Validators.pattern("^[a-zA-z].*")]],
-      description: [{value : this.prodId ? this.productObj.description: '', disabled : this.prodId }, [Validators.required,Validators.pattern("^[a-zA-z].*")]],
+      description: [{value : this.prodId ? this.productObj.description: '', disabled : this.prodId }, [Validators.required,Validators.pattern("^[a-zA-z0-9].*")]],
       price: [{value : this.prodId ? Number(this.productObj.price) : '', disabled : this.prodId }, [Validators.required,Validators.pattern("^[1-9].*")]],
-      image: [{value : this.prodId ? 'default.jpg' : '', disabled : this.prodId},Validators.required]
+      image: [{value : this.prodId ? 'default.jpg' : '', disabled : this.prodId}]
     })
   }
 

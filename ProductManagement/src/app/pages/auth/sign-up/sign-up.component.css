@@ -17,3 +17,7 @@ a {
     border-color: red;
     box-shadow: 0 0 5px inset #e78b8b;
 }
+.ng-invalid.ng-dirty {
+    border-color: red;
+    box-shadow: 0 0 5px inset #e78b8b;
+}

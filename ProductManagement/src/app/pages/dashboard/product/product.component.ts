@@ -38,7 +38,7 @@ export class ProductComponent implements OnInit {
   }
 
   deleteProduct(i:any,item:any){
-    if(confirm('Are you Sure Delete this')){
+    if(confirm('Are you Sure Delete this Product')){
     this.productservice.delete(i,item);
     this.productList = this.productservice.getProductList();
     }

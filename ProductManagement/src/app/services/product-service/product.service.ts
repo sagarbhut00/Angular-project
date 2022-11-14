@@ -46,7 +46,7 @@ export class ProductService {
         return obj;
       });
       this.setProductList(arr);
-      this.toastr.success('Product Updated Successfull!')
+      this.toastr.success('Product Updated Successfull!');
       this.router.navigate(['dashboard/product']);
     });
     this.editProductObj.next(null);
