@@ -17,14 +17,14 @@
   <mat-sidenav-container class="example-container">
     <mat-sidenav #sidenav class="example-sidenav" [fixedTopGap]="0"
     [fixedBottomGap]="0" [fixedInViewport]="false" mode="side" opened>
-    <mat-selection-list #shoes [multiple]="false">
-      <mat-list-option *ngFor="let item of navList">
-        {{item}}
+    <mat-selection-list [multiple]="false">
+      <mat-list-option *ngFor="let item of navList" [routerLink]="[item.path]">
+        {{item.name}}
       </mat-list-option>
     </mat-selection-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      
+      <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 

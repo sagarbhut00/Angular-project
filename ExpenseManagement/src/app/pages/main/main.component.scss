@@ -15,5 +15,8 @@
     align-items: center;
     justify-content: center;
     width: 200px;
-    background: rgba(255, 0, 0, 0.5);
+    background: rgb(86 0 255 / 15%);;
+}
+.mat-list-single-selected-option, .mat-list-single-selected-option:hover, .mat-list-single-selected-option:focus {
+    background: rgb(0 90 253 / 20%);
 }

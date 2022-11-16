@@ -3,17 +3,20 @@ import { CommonModule } from '@angular/common';
 
 import { MainRoutingModule } from './main-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { CategoriesComponent } from './categories/categories.component';
+import { MainComponent } from './main.component';
+import { MatModule } from 'src/app/appModules/mat.module';
+
 
 
 @NgModule({
   declarations: [
+    MainComponent,
     DashboardComponent,
-    CategoriesComponent
   ],
   imports: [
     CommonModule,
-    MainRoutingModule
+    MainRoutingModule,
+    MatModule
   ]
 })
 export class MainModule { }

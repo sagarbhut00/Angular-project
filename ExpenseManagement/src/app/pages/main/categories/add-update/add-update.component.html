@@ -1,0 +1,34 @@
+<div class="container mt-4">
+    <h1 class="text-center mb-3">Add Spend Money</h1>
+    <form action="" class="rounded shadow example-form p-3" [formGroup]="spendForm" (ngSubmit)="onSave()">
+
+        <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Select an Type</mat-label>
+            <mat-select formControlName="type">
+                <mat-option value="income" (click)="select()">Income</mat-option>
+                <mat-option value="expense" (click)="select()">Expense</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Category</mat-label>
+            <input type="text" placeholder="Pick one" aria-label="Number" matInput
+                [matAutocomplete]="auto" formControlName="category">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option}}
+                </mat-option>
+            </mat-autocomplete>
+            <mat-icon matSuffix>expand_more</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Note</mat-label>
+            <input matInput placeholder="Ex: dinner" formControlName="note">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Amount</mat-label>
+            <input matInput placeholder="Ex: 200" formControlName="amount">
+        </mat-form-field>
+        <button mat-raised-button color="accent"> Save</button>
+        <button mat-button color="primary" class="ms-2" (click)="location.back()">Cancel</button>
+    </form>
+</div>
