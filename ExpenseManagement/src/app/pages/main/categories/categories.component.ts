@@ -1,40 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-export interface Transaction {
-  Date: string | null;
-  Type: string;
-  Category: string;
-  Amount: number;
-  Note: string;
-}
+import { Data } from 'src/app/models/data';
+import { SpendService } from 'src/app/services/spend.service';
 
 
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
-
-/**
- * @title Basic use of `<table mat-table>`
- */
 
 @Component({
   selector: 'app-categories',
@@ -43,29 +14,31 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class CategoriesComponent implements OnInit {
 
-  displayedColumns: string[] = ['Date', 'Type', 'Category', 'Amount', 'Note'];
-  dataSource: Transaction[] = [];
+  displayedColumns: string[] = ['date', 'type', 'category', 'amount', 'note'];
+  dataSource!: MatTableDataSource<Data>;
+  dataList !: Data[];
 
   constructor(private router: Router,
-    public datepipe: DatePipe) { }
+    public datepipe: DatePipe,
+    private spendservice: SpendService) { }
 
 
   ngOnInit(): void {
-    let date = new Date();
-    let now = this.datepipe.transform(date, 'dd-MM-yyyy');
-    const TRANS_DATA: Transaction[] = [
-      { Date: now, Type: 'Income', Category: 'salary', Amount: 10000, Note: '' },
-      { Date: now, Type: 'Income', Category: 'salary', Amount: 10000, Note: '' },
-      { Date: now, Type: 'Expense', Category: 'dinner', Amount: 70, Note: 'pangat' },
-      { Date: now, Type: 'Income', Category: 'salary', Amount: 10000, Note: '' },
-      { Date: now, Type: 'Income', Category: 'salary', Amount: 10000, Note: '' },
-      { Date: now, Type: 'Income', Category: 'salary', Amount: 10000, Note: '' }
-    ]
-    this.dataSource = TRANS_DATA;
+    
+    console.log(this.spendservice.getData());
   }
 
   add() {
     this.router.navigate(['main/category/add']);
   }
 
+  // async getData() {
+  //   let list: Data[];
+  //   await this.spendservice.getDatafromDB().then(value => {
+  //     list = value as Data[];
+  //     this.dataList = list;
+  //   });
+  //   this.spendservice.id.next(this.dataList.length);
+  //   this.dataSource = new MatTableDataSource(this.dataList);
+  // }
 }
