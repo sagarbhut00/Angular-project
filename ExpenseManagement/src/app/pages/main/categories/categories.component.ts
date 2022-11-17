@@ -16,7 +16,7 @@ export class CategoriesComponent implements OnInit {
 
   displayedColumns: string[] = ['date', 'type', 'category', 'amount', 'note'];
   dataSource!: MatTableDataSource<Data>;
-  dataList !: Data[];
+  dataList:any;
 
   constructor(private router: Router,
     public datepipe: DatePipe,
@@ -25,20 +25,24 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit(): void {
     
-    console.log(this.spendservice.getData());
+    this.spendservice.getDatafromDB().subscribe((res) => {
+      this.dataList = res;
+      this.spendservice.id.next(this.dataList.length);
+      this.dataSource = new MatTableDataSource(this.dataList);
+    });
   }
 
   add() {
     this.router.navigate(['main/category/add']);
   }
 
-  // async getData() {
-  //   let list: Data[];
-  //   await this.spendservice.getDatafromDB().then(value => {
-  //     list = value as Data[];
-  //     this.dataList = list;
-  //   });
-  //   this.spendservice.id.next(this.dataList.length);
-  //   this.dataSource = new MatTableDataSource(this.dataList);
-  // }
+//   async getData() {
+//     let list: Data[];
+//     await this.spendservice.getDatafromDB().then(value => {
+//       list = value as Data[];
+//       this.dataList = list;
+//     });
+//     this.spendservice.id.next(this.dataList.length);
+//     this.dataSource = new MatTableDataSource(this.dataList);
+//   }
 }

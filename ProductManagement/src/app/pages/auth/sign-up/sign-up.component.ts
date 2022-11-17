@@ -18,7 +18,7 @@ export class SignUpComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private authservice: AuthService,
     private router: Router) { 
-      this.authservice.signinMessage.subscribe(res => this.emailMsg = res);
+      this.authservice.signupMessage.subscribe(res => this.emailMsg = res);
     }
 
   ngOnInit(): void {

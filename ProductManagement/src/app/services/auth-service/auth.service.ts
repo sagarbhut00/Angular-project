@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
 
   signinMessage = new BehaviorSubject('');
+  signupMessage = new BehaviorSubject('');
 
   constructor(private http: HttpClient, 
               private router: Router,
@@ -31,7 +32,7 @@ export class AuthService {
       this.router.navigate(['']);
     },
     error => {
-      this.signinMessage.next('Email has already taken.');
+      this.signupMessage.next('Email has already taken.');
     });
   }
 
