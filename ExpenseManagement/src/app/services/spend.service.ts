@@ -10,8 +10,9 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SpendService {
 
-  id = new BehaviorSubject<Number>(1);
+  id = new BehaviorSubject<Number>(0);
   dataList !: Data[];
+  transData = new BehaviorSubject<Data>({});
 
 
   constructor(private db: AngularFireDatabase,
@@ -21,12 +22,26 @@ export class SpendService {
   async add(data: any) {
     let id;
     this.id.subscribe(res => id = Number(res) + 1);
+    data.id = id;
     await this.db.object(`userData/${id}`).set(data);
+    this.location.back();
+  }
+
+  async delete(data: Data){
+    await this.db.object(`userData/${data['id']}`).remove();
+  }
+
+  async edit(data: Data){
+    await this.db.object(`userData/${data['id']}`).set(data);
     this.location.back();
   }
 
   getDatafromDB() {
     return this.db.list('userData').valueChanges()
+  }
+
+  getSingleData(id:number){
+    return this.db.object('/userData/'+ id).valueChanges();
   }
 
   // async getData() {

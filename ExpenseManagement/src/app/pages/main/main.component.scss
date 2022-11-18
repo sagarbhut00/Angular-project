@@ -17,6 +17,9 @@
     width: 200px;
     background: rgb(86 0 255 / 15%);;
 }
-.mat-list-single-selected-option, .mat-list-single-selected-option:hover, .mat-list-single-selected-option:focus {
+// .mat-list-single-selected-option, .mat-list-single-selected-option:hover, .mat-list-single-selected-option:focus {
+//     background: rgb(0 90 253 / 20%);
+// }
+.router-link-active.mat-list-single-selected-option, .mat-list-single-selected-option:hover, .mat-list-single-selected-option:focus{
     background: rgb(0 90 253 / 20%);
 }

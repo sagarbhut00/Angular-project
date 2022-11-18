@@ -2,7 +2,8 @@ import { DatePipe, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Observable, startWith, map } from 'rxjs';
+import { ActivatedRoute, Data } from '@angular/router';
+import { Observable, startWith, map, async } from 'rxjs';
 import { SpendService } from 'src/app/services/spend.service';
 
 
@@ -14,56 +15,69 @@ import { SpendService } from 'src/app/services/spend.service';
 export class AddUpdateComponent implements OnInit {
 
   spendForm: FormBuilder | any;
+  id !: number;
+  data !: Data;
+  categoryOptions: string[] = [];
 
   constructor(private fb: FormBuilder,
     public location: Location,
     private spendservice: SpendService,
-    private datepipe: DatePipe) {
-    this.spendForm = this.fb.group({
-      type: ['income', Validators.required],
-      category: ['', Validators.required],
-      note: [''],
-      amount: ['', Validators.required],
-      date: [new Date(), Validators.required]
-    })
-  }
+    private datepipe: DatePipe,
+    private activeroute: ActivatedRoute,
+    private db: AngularFireDatabase) {
+    this.activeroute.paramMap.subscribe((res: any) => this.id = res.get('id'));
+    this.spendservice.transData.subscribe(res => {
+      this.data = res;
+    });
 
-  expenseOptions: string[] = ['Food', 'Dinner', 'Fuel', 'Transport', 'General', 'Lunch'];
-  incomeOptions: string[] = ['Salary', 'Deposit', 'Savings'];
-  filteredOptions: Observable<string[]> | undefined;
+  }
 
   ngOnInit() {
+
+    let todayDate = new Date();
+    this.spendForm = this.fb.group({
+      type: [this.id ? this.data['type'] : 'income', Validators.required],
+      category: [this.id ? this.data['category'] : '', Validators.required],
+      note: [this.id ? this.data['note'] : ''],
+      amount: [this.id ? this.data['amount'] : '', Validators.required],
+      date: [this.id ? new Date(this.data['date']) : todayDate, Validators.required]
+    });
     this.select();
   }
+
   select() {
-    this.filteredOptions = this.spendForm.get('category').valueChanges.pipe(
-      startWith(''),
-      map((value: any) => this.filter(value)),
-    );
-  }
-
-  filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
     if (this.spendForm.value.type === 'income') {
-      return this.incomeOptions.filter(option => option.toLowerCase().includes(filterValue));
+
+      this.categoryOptions = ['Salary', 'Deposit', 'Savings'];
     } else {
-      return this.expenseOptions.filter(option => option.toLowerCase().includes(filterValue));
+      this.categoryOptions = ['Food', 'Dinner', 'Fuel', 'Transport', 'General', 'Lunch'];
     }
   }
 
   onSave() {
+    console.log(this.spendForm.value.date.getTime());
     if (this.spendForm.valid) {
-      console.log(this.spendForm);
-      let now = this.datepipe.transform(this.spendForm.value.date, 'dd-MM-yyyy');
-      let obj = {
-        date: now,
-        type: this.spendForm.value.type,
-        category: this.spendForm.value.category,
-        amount: this.spendForm.value.amount,
-        note: this.spendForm.value.note,
+      if (!this.id) {
+        let obj = {
+          date: this.spendForm.value.date.getTime(),
+          type: this.spendForm.value.type,
+          category: this.spendForm.value.category,
+          amount: this.spendForm.value.amount,
+          note: this.spendForm.value.note,
+        }
+        this.spendservice.add(obj);
       }
-      this.spendservice.add(obj);
+      else{
+        let obj = {
+          id: this.id,
+          date: this.spendForm.value.date.getTime(),
+          type: this.spendForm.value.type,
+          category: this.spendForm.value.category,
+          amount: this.spendForm.value.amount,
+          note: this.spendForm.value.note,
+        }
+        this.spendservice.edit(obj);
+      }
     }
   }
 }
