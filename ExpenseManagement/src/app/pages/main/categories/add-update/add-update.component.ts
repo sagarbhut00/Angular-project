@@ -42,12 +42,11 @@ export class AddUpdateComponent implements OnInit {
       amount: [this.id ? this.data['amount'] : '', Validators.required],
       date: [this.id ? new Date(this.data['date']) : todayDate, Validators.required]
     });
-    this.select();
+    this.selectCategory();
   }
 
-  select() {
+  selectCategory() {
     if (this.spendForm.value.type === 'income') {
-
       this.categoryOptions = ['Salary', 'Deposit', 'Savings'];
     } else {
       this.categoryOptions = ['Food', 'Dinner', 'Fuel', 'Transport', 'General', 'Lunch'];
@@ -55,11 +54,10 @@ export class AddUpdateComponent implements OnInit {
   }
 
   onSave() {
-    console.log(this.spendForm.value.date.getTime());
     if (this.spendForm.valid) {
       if (!this.id) {
         let obj = {
-          date: this.spendForm.value.date.getTime(),
+          date: this.spendForm.value.date.toString(),
           type: this.spendForm.value.type,
           category: this.spendForm.value.category,
           amount: this.spendForm.value.amount,
@@ -67,10 +65,10 @@ export class AddUpdateComponent implements OnInit {
         }
         this.spendservice.add(obj);
       }
-      else{
+      else {
         let obj = {
           id: this.id,
-          date: this.spendForm.value.date.getTime(),
+          date: this.spendForm.value.date.toString(),
           type: this.spendForm.value.type,
           category: this.spendForm.value.category,
           amount: this.spendForm.value.amount,

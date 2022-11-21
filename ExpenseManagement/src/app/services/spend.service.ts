@@ -27,40 +27,31 @@ export class SpendService {
     this.location.back();
   }
 
-  async delete(data: Data){
+  async delete(data: Data) {
     await this.db.object(`userData/${data['id']}`).remove();
   }
 
-  async edit(data: Data){
+  async edit(data: Data) {
     await this.db.object(`userData/${data['id']}`).set(data);
     this.location.back();
   }
 
+  getSingleData(id: number) {
+    return this.db.object('/userData/' + id).valueChanges();
+  }
+
   getDatafromDB() {
-    return this.db.list('userData').valueChanges()
+    return new Promise<Data>((resole, reject) => {
+      this.db.list('userData').valueChanges().subscribe(value => {
+        if (value === undefined) {
+          reject('Data is Empty');
+        } else {
+          resole(value)
+        }
+      }
+      );
+    })
   }
-
-  getSingleData(id:number){
-    return this.db.object('/userData/'+ id).valueChanges();
-  }
-
-  // async getData() {
-  //   let list: Data[];
-  //   await this.getDatafromDB().then(value => {
-  //     list = value as Data[];
-  //     this.dataList = list;
-  //   });
-  //   this.id.next(this.dataList.length);
-  //   console.log(this.dataList);
-  //   return this.dataList;
-  //   // this.dataSource = new MatTableDataSource(this.dataList);
-  // }
-
-  // getDatafromDB() {
-  //   return new Promise<Data>((resole, reject) => {
-  //     this.db.list('userData').valueChanges().subscribe(value =>
-  //       resole(value));
-  //   });
-  // }
+  
 }
 

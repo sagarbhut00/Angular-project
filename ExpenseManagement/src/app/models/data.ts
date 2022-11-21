@@ -1,6 +1,6 @@
 export interface Data {
     id: number,
-    date: string | null,
+    date: string,
     type: string,
     category: string,
     note: string,

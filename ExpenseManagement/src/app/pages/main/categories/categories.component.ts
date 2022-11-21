@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Data } from 'src/app/models/data';
 import { SpendService } from 'src/app/services/spend.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -18,25 +19,18 @@ export class CategoriesComponent implements OnInit {
   displayedColumns: string[] = ['date', 'type', 'category', 'amount', 'note', 'action'];
   dataSource!: MatTableDataSource<Data>;
   dataList!: Data[];
+  noDataTemp = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private router: Router,
     public datepipe: DatePipe,
-    private spendservice: SpendService) { }
+    private spendservice: SpendService,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.spendservice.getDatafromDB().subscribe((res : any) => {
-      this.dataList = res;
-      console.log(this.dataList);
-      if(this.dataList.length !== 0){
-        this.spendservice.id.next(this.dataList[this.dataList.length -1 ].id);
-      }
-      this.dataSource = new MatTableDataSource(this.dataList.reverse());
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.getData();
   }
 
   applyFilter(event: Event) {
@@ -51,24 +45,50 @@ export class CategoriesComponent implements OnInit {
     this.router.navigate(['main/category/add']);
   }
 
-  edit(data:Data) {
+  edit(data: Data) {
     this.spendservice.transData.next(data);
     this.router.navigate(['main/category/edit', data.id]);
   }
 
-  delete(data:Data) {
-    if (confirm('Are You sure, Delete this Transaction?')){
+  delete(data: Data) {
+    if (confirm('Are You sure, Delete this Transaction?')) {
       this.spendservice.delete(data);
+      this.getData();
     }
   }
+
+  async getData() {
+    let list: Data[];
+    await this.spendservice.getDatafromDB().then(value => {
+      list = value as Data[];
+      this.dataList = list;
+      this.spendservice.id.next(this.dataList[this.dataList.length - 1].id);
+    })
+      .catch(err => {
+        console.log(err);
+        this.noDataTemp = true;
+      });
+    this.dataSource = new MatTableDataSource(this.dataList);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  sortData() {
+    this.dataSource.sortingDataAccessor = (item: any, property) => {
+      switch (property) {
+
+        case 'date': {
+          let newDate = new Date(item.date);
+          return newDate;
+        }
+        default: {
+          return item[property];
+        }
+      }
+    };
+    this.dataSource.sort = this.sort;
+  }
 }
-//   async getData() {
-//     let list: Data[];
-//     await this.spendservice.getDatafromDB().then(value => {
-//       list = value as Data[];
-//       this.dataList = list;
-//     });
-//     this.spendservice.id.next(this.dataList.length);
-//     this.dataSource = new MatTableDataSource(this.dataList);
-//   }
+
+
 

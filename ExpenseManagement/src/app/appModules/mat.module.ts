@@ -15,6 +15,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSortModule} from '@angular/material/sort';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatCardModule} from '@angular/material/card';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 
 
@@ -33,7 +36,10 @@ const materials = [
   MatNativeDateModule,
   MatPaginatorModule,
   MatMenuModule,
-  MatSortModule
+  MatSortModule,
+  MatDialogModule,
+  MatCardModule,
+  MatGridListModule
 
 ]
 
