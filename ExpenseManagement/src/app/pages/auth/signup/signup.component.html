@@ -1,1 +1,53 @@
-<p>signup works!</p>
+<div>
+    <form class="example-form p-3 rounded shadow m-auto mt-5" (submit)="onSubmit()" [formGroup]="signupForm">
+        <h1 class="text-center mb-3" style="color : #8f578d">Sign Up</h1>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input type="text" matInput formControlName="first_name" WhiteSpace>
+            <mat-error
+                *ngIf="signupForm.get('first_name').hasError('required') || signupForm.get('first_name').hasError('whitespace')">
+                *First Name is Required.
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input type="text" matInput formControlName="last_name" WhiteSpace>
+            <mat-error class="mb-3"
+                *ngIf="signupForm.get('last_name').hasError('required') || signupForm.get('first_name').hasError('whitespace')">
+                *First Name is Required.
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email" (keydown)="onkeydown()">
+            <mat-error class="mb-3"
+                *ngIf="signupForm.get('email').hasError('email') && !signupForm.get('email').hasError('required')">
+                *Please enter a valid email address
+            </mat-error>
+            <mat-error class="mb-3" *ngIf="signupForm.get('email').hasError('required')">
+                *Email is required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Enter your password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+            <button tyep="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error class="mb-3" *ngIf="signupForm.get('password').hasError('required')">
+                *Password is required
+            </mat-error>
+            <mat-error class="mb-3" *ngIf="signupForm.get('password').hasError('pattern')">
+                *Enter Valid Password
+            </mat-error>
+        </mat-form-field>
+        <mat-error class="mb-3" *ngIf="errorMsg.length !== 0">
+            {{errorMsg}}
+        </mat-error>
+        <p class="mt-3">
+            <button mat-raised-button color="accent">Sign Up</button>
+            <button type="button" mat-button color="primary" class="ms-2" [routerLink]="['/signin']">Sign In</button>
+        </p>
+    </form>
+</div>

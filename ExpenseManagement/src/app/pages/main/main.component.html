@@ -5,17 +5,17 @@
     </button>
     <span>Expense Manager</span>
     <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
-    </button>
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
       <mat-icon>share</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="logout()">
+      <mat-icon>logout</mat-icon>
     </button>
   </mat-toolbar>
 
   <mat-sidenav-container class="example-container">
     <mat-sidenav #sidenav class="example-sidenav" [fixedTopGap]="0"
-    [fixedBottomGap]="0" [fixedInViewport]="false" mode="side" opened>
+    [fixedBottomGap]="0" [fixedInViewport]="false" mode="side">
     <mat-selection-list [multiple]="false">
       <mat-list-option *ngFor="let item of navList" [routerLink]="[item.path]" routerLinkActive="router-link-active">
         {{item.name}}

@@ -1,18 +1,22 @@
 <div class="ms-5 me-5 mt-3">
-    
-    <h1 class="text-center">Categories</h1>
+
+    <h1 class="text-center" style="color: cadetblue;font-size: 55px;">Statements</h1>
     <div class="d-flex justify-content-end">
         <button mat-raised-button color="accent" class="" (click)="add()"> + Add Income/Expense</button>
     </div>
-    <div class="bg-light rounded shadow h-200 p-3 mt-2">
-        <h2 class="mb-3" style="color: cornflowerblue;">Transactions</h2>
-        <mat-form-field>
-            <mat-label>
-                <mat-icon>search</mat-icon>
-                Search
-            </mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. dinner" #input>
-        </mat-form-field>
+    <div class="bg-light rounded shadow h-200 p-3 mt-3">
+        <div class="d-flex align-items-center justify-content-between">
+            <h2 class="mb-3" style="color: cornflowerblue;">Transactions</h2>
+            <div class="search">
+                <mat-form-field appearance="outline">
+                    <mat-label>
+                        <mat-icon>search</mat-icon>
+                        Search
+                    </mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. dinner" #input>
+                </mat-form-field>
+            </div>
+        </div>
         <div>
             <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData()" matSortActive="id"
                 matSortDirection="desc" matSortDisableClear>
@@ -38,8 +42,9 @@
                 <!-- Amount Column -->
                 <ng-container matColumnDef="amount">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
-                    <td mat-cell *matCellDef="let row" 
-                    [ngClass]="{'income' : row.type === 'income', 'expense' : row.type === 'expense'}"> {{row.amount}} </td>
+                    <td mat-cell *matCellDef="let row"
+                        [ngClass]="{'income' : row.type === 'income', 'expense' : row.type === 'expense'}">
+                        {{row.amount}} </td>
                 </ng-container>
 
                 <!-- Note Column -->
@@ -80,7 +85,6 @@
                     </tr>
                 </ng-container>
             </table>
-            <!-- <h3 class="text-danger text-center" *ngIf="dataList === undefined || dataList.length === 0">No data</h3> -->
             <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
         </div>
     </div>

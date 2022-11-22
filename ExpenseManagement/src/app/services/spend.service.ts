@@ -5,6 +5,7 @@ import { Data, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,22 +18,26 @@ export class SpendService {
 
   constructor(private db: AngularFireDatabase,
     private router: Router,
-    private location: Location) { }
+    private location: Location,
+  ) { }
 
   async add(data: any) {
     let id;
     this.id.subscribe(res => id = Number(res) + 1);
     data.id = id;
     await this.db.object(`userData/${id}`).set(data);
+    // this.toastr.success('Transaction add Successfully');
     this.location.back();
   }
 
   async delete(data: Data) {
     await this.db.object(`userData/${data['id']}`).remove();
+    // this.toastr.success('Transaction delete Successfully');
   }
 
   async edit(data: Data) {
     await this.db.object(`userData/${data['id']}`).set(data);
+    // this.toastr.success('Transaction Update Successfully');
     this.location.back();
   }
 
@@ -52,6 +57,6 @@ export class SpendService {
       );
     })
   }
-  
+
 }
 

@@ -1,61 +1,57 @@
-<div class="container m-5">
-
+<div class="container">
     <mat-grid-list cols="3" rowHeight="1:1">
         <mat-grid-tile>
-            <mat-card class="example-card">
+            <mat-card class="example-card card-1">
                 <mat-card-header>
-                    <mat-card-title class="text-info" style="font-size: 50px;">Income</mat-card-title>
+                    <mat-card-title class="" style="font-size: 50px;">Income</mat-card-title>
                 </mat-card-header>
-                
-                <mat-card-content style="font-size: 25px;margin-left: 15px;">
-                   Total : <span style="color:green">₹2000</span>
+                <mat-divider></mat-divider>
+                <mat-card-content class="card-content">
+                    Total : <span class="income">{{totalIncome | currency :'INR':'symbol' }}</span>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-button style="margin-left: 15px;background-color:orange;color:white">View</button>
+                    <button type="button" mat-button class="view-button"
+                        (click)="onNavigate('category/income')">View</button>
                 </mat-card-actions>
                 <mat-card-footer>
+                    <mat-progress-bar mode="indeterminate" *ngIf="spinner"></mat-progress-bar>
                 </mat-card-footer>
             </mat-card>
         </mat-grid-tile>
         <mat-grid-tile>
-            <mat-card class="example-card">
+            <mat-card class="example-card card-2">
                 <mat-card-header>
-                    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-                    <mat-card-title>Shiba Inu</mat-card-title>
+                    <mat-card-title class="" style="font-size: 50px;">Expense</mat-card-title>
                 </mat-card-header>
-                <mat-card-content>
-                    <p>This card has divider and indeterminate progress as footer</p>
-                    <p>gdgdgdgdgdgdgf</p>
-                    <mat-divider></mat-divider>
+                <mat-divider></mat-divider>
+                <mat-card-content class="card-content">
+                    Total : <span class="expense">{{totalExpense | currency :'INR':'symbol' }}</span>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-button>LIKE</button>
-                    <button mat-button>SHARE</button>
+                    <button mat-button class="view-button" (click)="onNavigate('category/expense')">View</button>
                 </mat-card-actions>
                 <mat-card-footer>
+                    <mat-progress-bar mode="indeterminate" *ngIf="spinner"></mat-progress-bar>
                 </mat-card-footer>
             </mat-card>
         </mat-grid-tile>
         <mat-grid-tile>
-            <mat-card class="example-card">
+            <mat-card class="example-card" [ngClass]="{'card-1' : balance > 0 ,'card-2' : balance < 0}">
                 <mat-card-header>
-                    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-                    <mat-card-title>Shiba Inu</mat-card-title>
+                    <mat-card-title class="" style="font-size: 50px;">Balance</mat-card-title>
                 </mat-card-header>
-                <mat-card-content>
-                    <p>This card has divider and indeterminate progress as footer</p>
-                    <p>gdgdgdgdgdgdgf</p>
-                    <mat-divider></mat-divider>
+                <mat-divider></mat-divider>
+                <mat-card-content class="card-content">
+                    Total : <span [ngClass]="{'income' : balance > 0 ,'expense' : balance < 0}">{{balance | currency
+                        :'INR':'symbol'}}</span>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-button>LIKE</button>
-                    <button mat-button>SHARE</button>
+                    <button mat-button class="view-button" (click)="onNavigate('category')">View</button>
                 </mat-card-actions>
                 <mat-card-footer>
+                    <mat-progress-bar mode="indeterminate" *ngIf="spinner"></mat-progress-bar>
                 </mat-card-footer>
             </mat-card>
         </mat-grid-tile>
     </mat-grid-list>
-
-
 </div>

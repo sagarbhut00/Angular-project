@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common'
 
 
+
 @NgModule({
   declarations: [
     CategoriesComponent,
@@ -24,7 +25,8 @@ import { DatePipe } from '@angular/common'
     CategoriesRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    MatModule
+    MatModule,
+
   ],
   providers: [DatePipe]
 })

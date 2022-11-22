@@ -76,7 +76,6 @@ export class CategoriesComponent implements OnInit {
   sortData() {
     this.dataSource.sortingDataAccessor = (item: any, property) => {
       switch (property) {
-
         case 'date': {
           let newDate = new Date(item.date);
           return newDate;

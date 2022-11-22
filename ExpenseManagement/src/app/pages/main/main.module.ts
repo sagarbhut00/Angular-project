@@ -7,7 +7,6 @@ import { MainComponent } from './main.component';
 import { MatModule } from 'src/app/appModules/mat.module';
 
 
-
 @NgModule({
   declarations: [
     MainComponent,

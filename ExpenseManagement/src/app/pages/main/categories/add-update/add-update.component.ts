@@ -47,9 +47,9 @@ export class AddUpdateComponent implements OnInit {
 
   selectCategory() {
     if (this.spendForm.value.type === 'income') {
-      this.categoryOptions = ['Salary', 'Deposit', 'Savings'];
+      this.categoryOptions = ['Salary', 'Deposit', 'Savings'].sort();
     } else {
-      this.categoryOptions = ['Food', 'Dinner', 'Fuel', 'Transport', 'General', 'Lunch'];
+      this.categoryOptions = ['Food', 'Dinner', 'Fuel', 'Transport', 'General', 'Lunch'].sort();
     }
   }
 

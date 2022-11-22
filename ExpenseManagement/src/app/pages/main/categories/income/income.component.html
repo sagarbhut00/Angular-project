@@ -1,17 +1,21 @@
 <div class="ms-5 me-5 mt-3">
-    <h1 class="text-center text-success">Income</h1>
+    <h1 class="text-center text-success" style="font-size: 55px;">Income</h1>
     <div class="bg-light rounded shadow h-200 p-3 mt-5">
-        <h2 class="mb-3" style="color: cornflowerblue;">Transactions</h2>
-        <mat-form-field>
-            <mat-label>
-                <mat-icon>search</mat-icon>
-                Search
-            </mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. dinner" #input>
-        </mat-form-field>
+        <div class="d-flex align-items-center justify-content-between">
+            <h2 class="mb-3" style="color: cornflowerblue;">Transactions</h2>
+            <div class="search">
+                <mat-form-field appearance="outline">
+                    <mat-label>
+                        <mat-icon>search</mat-icon>
+                        Search
+                    </mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. dinner" #input>
+                </mat-form-field>
+            </div>
+        </div>
         <div>
             <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData()" matSortActive="id"
-            matSortDirection="desc" matSortDisableClear>
+                matSortDirection="desc" matSortDisableClear>
 
                 <!-- Date Column-->
                 <ng-container matColumnDef="date">

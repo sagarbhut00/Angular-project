@@ -1,4 +1,50 @@
 .example-card {
-    max-width: 400px;
-    min-width: 400px;
-  }
+  max-width: 400px;
+  min-width: 400px;
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%) !important;
+}
+.example-card.card-1{
+  background-color: #00ff000f;
+}
+.example-card.card-2{
+  background-color: #ff00000f;
+}
+
+.card-content {
+  font-size: 18px;
+  margin-left: 15px;
+  margin-top: 10px;
+}
+
+.view-button {
+  margin-left: 24px !important;
+  background-color: orange;
+  color: white
+}
+
+span.income {
+  color: green;
+  font-size: 25px;
+  padding-left: 10px;
+}
+
+span.expense {
+  color: rgb(255, 0, 0);
+  font-size: 25px;
+  padding-left: 10px;
+}
+.mat-card>.mat-divider-horizontal {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  margin-top: -15px;
+}
+
+// .spinner {
+//   width: 60px;
+//   height: 60px;
+//   margin: auto;
+//   margin-top: 200px;
+//   position: relative;
+//   z-index: 1;
+// }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -27,10 +29,19 @@ export class MainComponent implements OnInit {
       name: 'Category'
     },
   ]
-  
-  constructor() { }
+
+  constructor(private router: Router,
+    private authservice: AuthService) { }
 
   ngOnInit(): void {
+  }
+
+  logout() {
+    if (confirm('Are you sure, you want Logout?')) {
+      localStorage.removeItem('user');
+      this.router.navigate(['']);
+      this.authservice.isSignin.next(false);
+    }
   }
 
 }

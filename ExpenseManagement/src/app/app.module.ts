@@ -8,8 +8,6 @@ import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +18,9 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
     AppRoutingModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    
+
   ],
   providers: [],
   bootstrap: [AppComponent]
