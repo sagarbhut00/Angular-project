@@ -17,6 +17,7 @@ export class IncomeComponent implements OnInit {
   dataSource!: MatTableDataSource<Data>;
   dataList!: Data[];
   noDataTemp = false;
+  spinner:boolean = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -58,14 +59,14 @@ export class IncomeComponent implements OnInit {
     await this.spendservice.getDatafromDB().then(value => {
       list = value as Data[];
       this.dataList = list;
-
       this.spendservice.id.next(this.dataList[this.dataList.length - 1]['id']);
+      this.dataList = this.dataList.filter(res => res['type'] === 'income');
+      this.spinner = false;
     })
       .catch(err => {
-        console.log(err);
+        this.spinner = false;
         this.noDataTemp = true;
       });
-    this.dataList = this.dataList.filter(res => res['type'] === 'income');
     this.dataSource = new MatTableDataSource(this.dataList);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

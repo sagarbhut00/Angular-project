@@ -66,10 +66,15 @@
 
 
                 <!-- Row shown when there is no matching data. -->
-                <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="5">No data matching the filter "{{input.value}}"</td>
-                </tr>
+                <ng-container>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="6" *ngIf="!noDataTemp">No data matching the filter {{input.value}}
+                        </td>
+                        <td class="mat-cell text-danger text-center" colspan="6" *ngIf="noDataTemp">No data Found</td>
+                    </tr>
+                </ng-container>
             </table>
+            <mat-spinner diameter="50" class="m-auto mt-3 mb-3" *ngIf="spinner"></mat-spinner>
             <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
         </div>
     </div>

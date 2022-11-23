@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { Data, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 
 
@@ -17,8 +18,8 @@ export class SpendService {
 
 
   constructor(private db: AngularFireDatabase,
-    private router: Router,
     private location: Location,
+    private toastr: ToastrService
   ) { }
 
   async add(data: any) {
@@ -26,18 +27,18 @@ export class SpendService {
     this.id.subscribe(res => id = Number(res) + 1);
     data.id = id;
     await this.db.object(`userData/${id}`).set(data);
-    // this.toastr.success('Transaction add Successfully');
+    this.toastr.success('Transaction add Successfully');
     this.location.back();
   }
 
   async delete(data: Data) {
     await this.db.object(`userData/${data['id']}`).remove();
-    // this.toastr.success('Transaction delete Successfully');
+    this.toastr.success('Transaction delete Successfully');
   }
 
   async edit(data: Data) {
     await this.db.object(`userData/${data['id']}`).set(data);
-    // this.toastr.success('Transaction Update Successfully');
+    this.toastr.success('Transaction Update Successfully');
     this.location.back();
   }
 

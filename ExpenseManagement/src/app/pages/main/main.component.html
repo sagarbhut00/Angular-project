@@ -15,9 +15,9 @@
 
   <mat-sidenav-container class="example-container">
     <mat-sidenav #sidenav class="example-sidenav" [fixedTopGap]="0"
-    [fixedBottomGap]="0" [fixedInViewport]="false" mode="side">
+    [fixedBottomGap]="0" [fixedInViewport]="false" mode="side" opened>
     <mat-selection-list [multiple]="false">
-      <mat-list-option *ngFor="let item of navList" [routerLink]="[item.path]" routerLinkActive="router-link-active">
+      <mat-list-option *ngFor="let item of navList" [id]='item.name' (click)="onNavigate(item.path,item.name)" >
         {{item.name}}
       </mat-list-option>
     </mat-selection-list>

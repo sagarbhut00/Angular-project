@@ -17,7 +17,7 @@ export class SigninComponent implements OnInit {
   errorMsg:string = '';
 
   constructor(private fb: FormBuilder,
-    private authservice: AuthService,
+    public authservice: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -31,7 +31,6 @@ export class SigninComponent implements OnInit {
   onSubmit() {
     this.submit = true;
     if (this.signinForm.valid) {
-      console.log(this.signinForm);
       const email = this.signinForm.value.email;
       const password = this.signinForm.value.password;
       this.authservice.signIn(email, password);

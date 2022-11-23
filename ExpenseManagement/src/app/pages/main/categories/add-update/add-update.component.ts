@@ -40,7 +40,13 @@ export class AddUpdateComponent implements OnInit {
       category: [this.id ? this.data['category'] : '', Validators.required],
       note: [this.id ? this.data['note'] : ''],
       amount: [this.id ? this.data['amount'] : '', Validators.required],
-      date: [this.id ? new Date(this.data['date']) : todayDate, Validators.required]
+      date: [this.id ? new Date(this.data['date']) : todayDate, Validators.required],
+      fruits: this.fb.group({
+        banana: [false],
+        apple: [false],
+        mango: [false]
+    })
+
     });
     this.selectCategory();
   }
@@ -55,6 +61,9 @@ export class AddUpdateComponent implements OnInit {
 
   onSave() {
     if (this.spendForm.valid) {
+      console.log(this.spendForm);
+      const f1 = Object.keys(this.spendForm.value.fruits).filter(key => this.spendForm.value.fruits[key] === true);
+      console.log(f1);
       if (!this.id) {
         let obj = {
           date: this.spendForm.value.date.toString(),
@@ -62,6 +71,7 @@ export class AddUpdateComponent implements OnInit {
           category: this.spendForm.value.category,
           amount: this.spendForm.value.amount,
           note: this.spendForm.value.note,
+          fruit: f1,
         }
         this.spendservice.add(obj);
       }

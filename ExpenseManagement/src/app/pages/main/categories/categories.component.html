@@ -85,6 +85,7 @@
                     </tr>
                 </ng-container>
             </table>
+            <mat-spinner diameter="50" class="m-auto mt-3 mb-3" *ngIf="spinner"></mat-spinner>
             <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
         </div>
     </div>

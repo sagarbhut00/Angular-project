@@ -17,6 +17,7 @@ export class ExpenseComponent implements OnInit {
   dataSource!: MatTableDataSource<Data>;
   dataList!: Data[];
   noDataTemp = false;
+  spinner:boolean = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -59,6 +60,7 @@ export class ExpenseComponent implements OnInit {
       list = value as Data[];
       this.dataList = list;
       this.spendservice.id.next(this.dataList[this.dataList.length - 1]['id']);
+      this.spinner = false;
     })
       .catch(err => {
         console.log(err);

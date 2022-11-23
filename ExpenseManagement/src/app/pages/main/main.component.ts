@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -31,17 +32,23 @@ export class MainComponent implements OnInit {
   ]
 
   constructor(private router: Router,
-    private authservice: AuthService) { }
+    private authservice: AuthService,
+    private location: Location) { }
 
   ngOnInit(): void {
+    console.log(this.location.path());
   }
 
   logout() {
     if (confirm('Are you sure, you want Logout?')) {
       localStorage.removeItem('user');
-      this.router.navigate(['']);
       this.authservice.isSignin.next(false);
+      this.router.navigate(['']);
     }
+  }
+
+  onNavigate(path: string,name: string) {
+    this.router.navigate([`main/${path}`]);
   }
 
 }

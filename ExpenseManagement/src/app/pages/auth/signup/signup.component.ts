@@ -17,10 +17,8 @@ export class SignupComponent implements OnInit {
   errorMsg: string = '';
 
   constructor(private fb: FormBuilder,
-    private authservice: AuthService,
-    private router: Router) {
-    // this.authservice.signupMessage.subscribe(res => this.emailMsg = res);
-  }
+    public authservice: AuthService,
+  ) { }
 
   ngOnInit(): void {
     this.authservice.errorSignupMessage.subscribe(res => this.errorMsg = res);
@@ -38,8 +36,8 @@ export class SignupComponent implements OnInit {
     if (this.signupForm.valid) {
       let email = this.signupForm.value.email.trim();
       let password = this.signupForm.value.password.trim();
-      this.authservice.signUp(email,password);
       this.submit = false;
+      this.authservice.signUp(email, password);
     }
   }
 

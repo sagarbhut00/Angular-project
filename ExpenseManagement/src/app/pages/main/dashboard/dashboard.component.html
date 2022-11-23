@@ -36,13 +36,13 @@
             </mat-card>
         </mat-grid-tile>
         <mat-grid-tile>
-            <mat-card class="example-card" [ngClass]="{'card-1' : balance > 0 ,'card-2' : balance < 0}">
+            <mat-card class="example-card" [ngClass]="{'card-1' : balance >= 0 ,'card-2' : balance < 0}">
                 <mat-card-header>
                     <mat-card-title class="" style="font-size: 50px;">Balance</mat-card-title>
                 </mat-card-header>
                 <mat-divider></mat-divider>
                 <mat-card-content class="card-content">
-                    Total : <span [ngClass]="{'income' : balance > 0 ,'expense' : balance < 0}">{{balance | currency
+                    Total : <span [ngClass]="{'income' : balance >= 0 ,'expense' : balance < 0}">{{balance | currency
                         :'INR':'symbol'}}</span>
                 </mat-card-content>
                 <mat-card-actions>

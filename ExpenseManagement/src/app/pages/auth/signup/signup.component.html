@@ -47,7 +47,7 @@
         </mat-error>
         <p class="mt-3">
             <button mat-raised-button color="accent">Sign Up</button>
-            <button type="button" mat-button color="primary" class="ms-2" [routerLink]="['/signin']">Sign In</button>
+            <button type="button" mat-button color="primary" class="ms-2" (click)="authservice.onNavigate('/signin')">Sign In</button>
         </p>
     </form>
 </div>

@@ -4,5 +4,6 @@ export interface Data {
     type: string,
     category: string,
     note: string,
-    amount: number
+    amount: number,
+    fruits: Array<string>
 }
