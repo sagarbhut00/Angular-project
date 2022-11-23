@@ -29,11 +29,9 @@ export class AddUpdateComponent implements OnInit {
     this.spendservice.transData.subscribe(res => {
       this.data = res;
     });
-
   }
 
   ngOnInit() {
-
     let todayDate = new Date();
     this.spendForm = this.fb.group({
       type: [this.id ? this.data['type'] : 'income', Validators.required],
@@ -45,8 +43,7 @@ export class AddUpdateComponent implements OnInit {
         banana: [false],
         apple: [false],
         mango: [false]
-    })
-
+      })
     });
     this.selectCategory();
   }
