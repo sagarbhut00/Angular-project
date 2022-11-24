@@ -16,7 +16,6 @@ export class ExpenseComponent implements OnInit {
   displayedColumns: string[] = ['date', 'category', 'amount', 'note', 'action'];
   dataSource!: MatTableDataSource<Data>;
   dataList!: Data[];
-  noDataTemp = false;
   spinner:boolean = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -61,12 +60,12 @@ export class ExpenseComponent implements OnInit {
       this.dataList = list;
       this.spendservice.id.next(this.dataList[this.dataList.length - 1]['id']);
       this.spinner = false;
+      this.dataList = this.dataList.filter(res => res['type'] === 'expense');
     })
       .catch(err => {
-        console.log(err);
-        this.noDataTemp = true;
+        this.spinner = false;
       });
-    this.dataList = this.dataList.filter(res => res['type'] === 'expense');
+    
     this.dataSource = new MatTableDataSource(this.dataList);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

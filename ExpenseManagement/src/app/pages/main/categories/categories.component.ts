@@ -67,7 +67,6 @@ export class CategoriesComponent implements OnInit {
       this.spinner = false;
     })
       .catch(err => {
-        console.log(err);
         this.noDataTemp = true;
         this.spinner = false;
       });
