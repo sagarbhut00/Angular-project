@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../services/auth-service/auth.service';
 import { Location } from '@angular/common';
 
@@ -9,16 +8,12 @@ import { Location } from '@angular/common';
 })
 export class SigninGuard implements CanActivate {
   constructor(private authservice: AuthService,
-              private router: Router,
-              public location: Location) {
+    private router: Router) {
   }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate() {
     if (this.authservice.getToken()) {
-      return this.router.navigate(['dashboard']);
-      // this.location.back();
+      return this.router.navigate(['/dashboard']);
     }
     return true;
   }

@@ -69,7 +69,7 @@ One Digit, One special character required.</pre>
         <div class="col-md-6">
             <label for="profile_image" class="form-label">Choose Profile Picture</label>
             <input type="file" class="form-control" id="profile_image" name="profile_image" accept="image/*"
-                (change)="onFileSelect($event)" #fileinput hidden formControlName="profile_image">
+                (change)="onFileSelect($event)" #fileinput hidden>
             <div>
                 <button type="button" class="btn btn-warning" (click)="fileinput.click()"><i
                         class="bi bi-paperclip text-dark"></i></button>

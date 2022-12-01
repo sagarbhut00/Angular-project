@@ -45,8 +45,7 @@
 
     <div class="col-md-6" *ngIf="!prodId">
       <label for="image" class="form-label">Choose Product Picture</label>
-      <input type="file" id="image" name="image" accept="image/*" (change)="onFileSelect($event)" #fileinput hidden
-        formControlName="image">
+      <input type="file" id="image" (change)="onFileSelects($event)" #fileinput hidden>
       <div>
         <button type="button" class="btn btn-warning" (click)="fileinput.click()"><i
             class="bi bi-paperclip text-dark"></i></button>
