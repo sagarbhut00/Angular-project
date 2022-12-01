@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,12 +13,16 @@ export class AuthService {
   signinMessage = new BehaviorSubject('');
   signupMessage = new BehaviorSubject('');
 
-  constructor(private http: HttpClient, 
-              private router: Router,
-              private toastr: ToastrService) { }
+  constructor(private http: HttpClient,
+    private router: Router,
+    private toastr: ToastrService) { }
 
   getToken() {
-    return localStorage.getItem('Token');
+    if (localStorage.getItem('Token')) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   setToken(token: any) {
@@ -26,24 +30,10 @@ export class AuthService {
   }
 
   signUp(data: FormData) {
-    return this.http.post<any>(environment.baseApi + 'register', data).subscribe(res => {
-      console.log(res);
-      this.toastr.success(res.msg);
-      this.router.navigate(['']);
-    },
-    error => {
-      this.signupMessage.next('Email has already taken.');
-    });
+    return this.http.post<any>(environment.baseApi + 'register', data)
   }
 
   signIn(data: FormData) {
-    this.http.post<any>(environment.baseApi + 'login', data).subscribe(res => {
-      this.setToken(res.data.token);
-      this.toastr.success(res.msg);
-      this.router.navigate(['dashboard']);
-    },
-    error => {
-        return this.signinMessage.next('Email or Password invalid');
-      });
+    return this.http.post<any>(environment.baseApi + 'login', data)
   }
 }

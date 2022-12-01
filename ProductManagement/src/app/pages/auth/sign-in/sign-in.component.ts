@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 
 @Component({
@@ -12,13 +13,14 @@ export class SignInComponent implements OnInit {
 
   signinForm: FormBuilder | any;
   submit: any;
-  message:any;
+  message: any;
 
-  constructor(private fb: FormBuilder,
-    private router: Router,
+  constructor(
+    private fb: FormBuilder,
     private authservice: AuthService,
-    private route: ActivatedRoute) {
-      this.authservice.signinMessage.subscribe(res => this.message = res)
+    private toastr: ToastrService,
+    private router: Router) {
+    this.authservice.signinMessage.subscribe(res => this.message = res)
   }
 
   ngOnInit(): void {
@@ -36,7 +38,15 @@ export class SignInComponent implements OnInit {
       formData.append('email', this.signinForm.value.email);
       formData.append('password', this.signinForm.value.password);
 
-      this.authservice.signIn(formData);
+      this.authservice.signIn(formData).subscribe(res => {
+        this.authservice.setToken(res.data.token);
+        this.toastr.success(res.msg);
+        this.router.navigate(['dashboard']);
+      },
+        error => {
+          this.authservice.signinMessage.next('Email or Password invalid');
+        }
+      )
       this.submit = false;
     }
   }

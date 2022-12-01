@@ -1,5 +1,5 @@
 <div class="container d-flex justify-content-end mb-3">
-  <button class="btn btn-primary mt-3 fw-bold" style="background-color: #ff8800; color:black" (click)="addProduct()">+
+  <button id="add-btn" class="btn btn-primary mt-3 fw-bold" style="background-color: #ff8800; color:black" (click)="addProduct()">+
     Add Product</button>
 </div>
 <div>
@@ -21,12 +21,12 @@
       <td>{{item.name}}</td>
       <td>&#8377;{{item.price | number}}</td>
       <td>
-        <i type="button" class="bi bi-eye-fill fs-4 me-3" style="color: #ff6a00;" data-bs-toggle="modal"
+        <i type="button" id="view-btn" class="bi bi-eye-fill fs-4 me-3" style="color: #ff6a00;" data-bs-toggle="modal"
           data-bs-target="#exampleModal" mat-raised-button matTooltip="View Product" matTooltipClass="tooltip"
           (click)="viewProduct(item)"></i>
-        <i type="button" class="bi bi-pencil-square text-primary fs-4 me-3" mat-raised-button matTooltip="Edit Product"
+        <i type="button" id="edit-btn" class="bi bi-pencil-square text-primary fs-4 me-3" mat-raised-button matTooltip="Edit Product"
           matTooltipClass="tooltip" (click)="editProduct(item)"></i>
-        <i type="button" class="bi bi-trash3-fill text-danger fs-4" mat-raised-button matTooltip="Delete Product"
+        <i type="button" id="delete-btn" class="bi bi-trash3-fill text-danger fs-4" mat-raised-button matTooltip="Delete Product"
           matTooltipClass="tooltip-delete" (click)="deleteProduct(i,item)"></i>
       </td>
     </tr>
