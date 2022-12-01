@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ProductComponent } from './product.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { ProductService } from 'src/app/services/product-service/product.service';
 
 
 describe('ProductComponent', () => {
@@ -12,6 +13,7 @@ describe('ProductComponent', () => {
   let fixture: ComponentFixture<ProductComponent>;
   let router: Router;
   let httpmock: HttpTestingController;
+  let productService: ProductService;
 
 
   beforeEach(async () => {
@@ -22,18 +24,21 @@ describe('ProductComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         ToastrModule.forRoot()],
+      providers: [ProductService]
     })
       .compileComponents();
 
     fixture = TestBed.createComponent(ProductComponent);
     router = TestBed.inject(Router);
     httpmock = TestBed.inject(HttpTestingController);
+    productService = TestBed.inject(ProductService);
     component = fixture.componentInstance;
     spyOn(router, 'navigate');
     fixture.detectChanges();
   })
 
   it('should create', () => {
+    component.ngOnInit();
     expect(component).toBeTruthy();
   });
 
@@ -59,7 +64,7 @@ describe('ProductComponent', () => {
 
   it('should Edit Product', () => {
     const obj = {
-      id: '12',
+      id: 12,
       name: 'sada',
       slug: 'dsada',
       description: 'sdfdf',
@@ -74,7 +79,7 @@ describe('ProductComponent', () => {
   it('should Delete Product', () => {
     const index = 3;
     const obj = {
-      id: '12',
+      id: 12,
       name: 'sada',
       slug: 'dsada',
       description: 'sdfdf',
@@ -84,5 +89,10 @@ describe('ProductComponent', () => {
     spyOn(component, 'deleteProduct').and.callThrough();
     component.deleteProduct(index, obj);
     expect(component.productList).not.toContain(obj);
+  });
+
+  it('should Product array not create in localStorage', () => {
+    productService.getProductList()
+    productService.setProductList([])
   });
 });

@@ -28,7 +28,11 @@ describe('AuthService', () => {
   });
 
   it('should getToken means if login than return true', () => {
-    expect(service.getToken()).toBe(true);
+    spyOn(service, 'getToken').and.returnValue(true);
+  });
+  
+  it('should getToken means if Not login than return false', () => {
+    spyOn(service, 'getToken').and.returnValue(false);
   });
 
   it('should user login with valid data', (() => {

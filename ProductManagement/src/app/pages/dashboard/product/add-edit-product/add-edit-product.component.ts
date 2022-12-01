@@ -72,6 +72,7 @@ export class AddEditProductComponent implements OnInit {
         formData.append('price', this.addProductForm.value.price);
         formData.append('image', this.addProductForm.value.image);
         this.productservice.add(formData).subscribe((res: any) => {
+          console.log(res);
           let dataList = this.productservice.getProductList();
           dataList.push(res.data);
           this.productservice.setProductList(dataList);
@@ -84,19 +85,7 @@ export class AddEditProductComponent implements OnInit {
           id: this.productObj.id,
           name: this.addProductForm.value.name
         }
-        this.productservice.edit(data).subscribe((res: any) => {
-          let dataList = this.productservice.getProductList();
-          let arr = dataList.map((obj: any) => {
-            if (obj.id === Number(res.data.id)) {
-              return res.data;
-            }
-            return obj;
-          });
-          this.productservice.setProductList(arr);
-          this.toastr.success('Product Updated Successfull!');
-          this.router.navigate(['dashboard/product']);
-          this.productservice.editProductObj.next(null);
-        });
+        this.productservice.edit(data)
       }
       this.submit = false;
     }

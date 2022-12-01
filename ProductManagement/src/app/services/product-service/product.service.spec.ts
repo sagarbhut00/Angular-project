@@ -1,7 +1,9 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
+import { takeWhile } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ProductService } from './product.service';
 
 describe('ProductService', () => {
@@ -9,6 +11,7 @@ describe('ProductService', () => {
   let router = {
     navigate: jasmine.createSpy('navigate')
   };
+  let httpmock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -21,10 +24,8 @@ describe('ProductService', () => {
       ]
     })
     service = TestBed.inject(ProductService);
+    httpmock = TestBed.inject(HttpTestingController);
   });
-  afterAll(() => {
-    localStorage.removeItem('Product');
-  })
 
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -58,11 +59,20 @@ describe('ProductService', () => {
     expect(service.getProductList).not.toContain(obj);
   });
 
-  it('should have update function', () => {
-    let data = {
-      name: 'sdas'
+  it('should have edit function', () => {
+    const productData = {
+      data: {
+        id: 2,
+        name: 'sdaa',
+        slug: 'sad',
+        description: 'asdsd',
+        price: 12,
+        image: 'abc.jpg'
+      }
     }
-    spyOn(service, 'edit').and.callThrough();
-    service.edit(data);
+    service.edit(new FormData());
+    const req = httpmock.expectOne(`${environment.baseApi}products/update`);
+    expect(req.request.method).toEqual('POST');
+    req.flush(productData);
   });
 });

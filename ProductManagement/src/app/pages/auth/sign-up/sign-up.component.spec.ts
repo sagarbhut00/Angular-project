@@ -58,6 +58,19 @@ describe('SignUpComponent', () => {
 
   it('should onSubmit', () => {
     component.signupForm?.setValue({
+      first_name: '',
+      last_name: 'jayho',
+      name: 'good',
+      email: '',
+      password: '12345678',
+      user_name: 'dfsf',
+      profile_image: File
+    })
+    component.onSubmit();
+  });
+
+  it('should onSubmit', () => {
+    component.signupForm?.setValue({
       first_name: 'abc',
       last_name: 'jayho',
       name: 'good',
@@ -85,6 +98,23 @@ describe('SignUpComponent', () => {
     authservice.signUp(new FormData());
     const req = httpmock.expectOne(`${environment.baseApi}register`)
     req.flush(user);
+  });
+
+  it('should enter taken email and register, get error', () => {
+    component.signupForm?.setValue({
+      first_name: 'abc',
+      last_name: 'jayho',
+      name: 'good',
+      email: 'sagar786@gmail.com',
+      password: '12345678',
+      user_name: 'dfsf',
+      profile_image: File
+    })
+    component.onSubmit();
+    authservice.signUp(new FormData());
+    const req = httpmock.expectOne(`${environment.baseApi}register`)
+    const msg = '401 (Unauthorized)';
+    req.flush(msg, { status: 401, statusText: 'Unauthorized' });
   });
 
   it('should keydown function call', () => {

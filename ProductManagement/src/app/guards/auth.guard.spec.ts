@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ToastrModule } from 'ngx-toastr';
@@ -15,7 +15,8 @@ describe('AuthGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule,
+      imports: [
+        HttpClientModule,
         RouterTestingModule,
         ToastrModule.forRoot(),
       ],
@@ -32,12 +33,15 @@ describe('AuthGuard', () => {
     expect(guard).toBeTruthy();
   });
 
-  it('should return true for canActivate() when user is Login', () => {
-    authMock.getToken.and.returnValue(true);
-  });
+  it('should return true for canActivate() when user is Login', fakeAsync(() => {
+    spyOn(authService, 'getToken').and.returnValue(true);
+    tick();
+    guard.canActivate();
+  }));
 
-  it('should return fasle for canActivate() when user is Not Login', () => {
-    authMock.getToken.and.returnValue(false);
-    expect(guard.canActivate()).toBeFalsy();
-  });
+  it('should return fasle for canActivate() when user is Not Login', fakeAsync(() => {
+    spyOn(authService, 'getToken').and.returnValue(false);
+    tick();
+    guard.canActivate();
+  }));
 });

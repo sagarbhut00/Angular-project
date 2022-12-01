@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -45,6 +45,7 @@ describe('AddEditProductComponent', () => {
     expect(component).toBeTruthy();
   });
 
+
   it('should add Product', () => {
     component.addProductForm?.setValue({
       name: 'sdaa',
@@ -70,37 +71,16 @@ describe('AddEditProductComponent', () => {
 
   it('should Edit Product', () => {
     component.prodId = 2;
-    expect(component.addProductForm.valid).toBeTruthy();
     component.addProductForm?.setValue({
       name: 'sdaa',
       slug: 'sad',
       description: 'asdsd',
       price: 12,
-      image: File
+      image: 'abc.jpg'
     })
-    component.productObj = {
-      id: 2,
-      name: 'sdaa',
-      slug: 'sad',
-      description: 'asdsd',
-      price: 12,
-      image: File
-    };
+  
     component.add();
-    const productData = {
-      data: {
-        id: 334,
-        name: 'efs'
-      }
-    }
-    service.edit(new FormData()).subscribe(res => {
-      expect(res).toBeTruthy();
-      let list = service.getProductList();
-      expect(list).toBeTruthy();
-    });
-    const req = httpmock.match(`${environment.baseApi}products/update`);
-    // req.flush(productData);
-    expect(req).toBeTruthy()
+    expect(service.edit).toBeFalsy()
   });
 
   it('should enter space in  price field that return false', () => {
