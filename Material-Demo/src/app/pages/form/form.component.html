@@ -1,0 +1,208 @@
+<div class="container shadow rounded mt-4 mb-4 pb-3 pt-3 example-form">
+    <div class="m-auto mb-3">
+        <mat-tab-group mat-align-tabs="center">
+            <mat-tab label="Register Form">
+                <div id="register">
+                    <h1 class="text-center">Register Form</h1>
+                    <mat-button-toggle-group #group="matButtonToggleGroup">
+                        <mat-button-toggle value="left" aria-label="Text align left">
+                            <mat-icon>format_align_left</mat-icon>
+                        </mat-button-toggle>
+                        <mat-button-toggle value="center" aria-label="Text align center">
+                            <mat-icon>format_align_center</mat-icon>
+                        </mat-button-toggle>
+                        <mat-button-toggle value="end" aria-label="Text align right">
+                            <mat-icon>format_align_right</mat-icon>
+                        </mat-button-toggle>
+                    </mat-button-toggle-group>
+                    <mat-divider></mat-divider>
+                    <form class="mt-3" [formGroup]="registerForm" (ngSubmit)="register()">
+                        <table class="example-full-width" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>First name</mat-label>
+                                        <input matInput name="fname" formControlName="fname">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>Last Name</mat-label>
+                                        <input matInput name="lname" formControlName="lname">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                        </table>
+                        <mat-radio-group aria-label="Select an option" class="mb-2" name="gender"
+                            formControlName="gender">
+                            <strong>Gender : </strong>
+                            <mat-radio-button value="male" class="me-2">Male</mat-radio-button>
+                            <mat-radio-button value="female">Female</mat-radio-button>
+                        </mat-radio-group>
+                        <table class="example-full-width mt-3" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <mat-form-field appearance="fill" class="example-full-width">
+                                        <mat-label>State</mat-label>
+                                        <mat-select name="state" formControlName="state">
+                                            <mat-option *ngFor="let state of stateList" [value]="state.value">
+                                                {{state.viewValue}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>City</mat-label>
+                                        <input type="text" placeholder="City" aria-label="city" matInput
+                                            [matAutocomplete]="auto" name="city" formControlName="city">
+                                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                                {{option}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                        </table>
+                        <p>
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Postal Code</mat-label>
+                                <input matInput #postalCode maxlength="6" max="6" placeholder="Ex. 94105" name="pincode"
+                                    formControlName="pincode">
+                                <mat-hint align="end">{{postalCode.value.length}} / 6</mat-hint>
+                            </mat-form-field>
+                        </p>
+                        <mat-label>&nbsp;&nbsp;<strong>Select your Hobby</strong></mat-label><br><br>
+                        <div formGroupName="hobby">
+                            <p>
+                                <mat-checkbox name="cricket" value="cricket" formControlName="cricket">Cricket
+                                </mat-checkbox>
+                            </p>
+                            <p>
+                                <mat-checkbox name="games" value="games" formControlName="games">Games</mat-checkbox>
+                            </p>
+                            <p>
+                                <mat-checkbox name="songs" value="songs" formControlName="songs">Songs</mat-checkbox>
+                            </p>
+                        </div>
+                        <p>
+                            <mat-form-field appearance="outline" floatLabel="always" class="me-5">
+                                <mat-label>Weight</mat-label>
+                                <input matInput type="number" class="example-right-align" placeholder="" name="weight"
+                                    formControlName="weight">
+                                <span matPrefix>@&nbsp;</span>
+                                <span matSuffix>.00 Kg</span>
+                            </mat-form-field>
+                            Unmarried <mat-slide-toggle #toggle name="toggle" formControlName="toggle">
+                            </mat-slide-toggle>
+                            Married
+                            <span>(You are <strong>{{toggle.checked ? 'Married' : 'Unmarried'}}</strong>)</span>
+                        </p>
+                        <P>
+                            <mat-form-field appearance="fill" class="example-full-width">
+                                <mat-label>Technology</mat-label>
+                                <mat-select name="technology" formControlName="technology">
+                                    <mat-option *ngFor="let tech of technologyList" [value]="tech.value">
+                                        {{tech.viewValue}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </P>
+                        <p>
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-label>Your Skills</mat-label>
+                                <mat-chip-list #chipList aria-label="skill selection">
+                                    <mat-chip *ngFor="let skill of Skills" (removed)="remove(skill)">
+                                        {{skill.name}}
+                                        <button matChipRemove>
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip>
+                                    <input placeholder="New Skills..." [matChipInputFor]="chipList"
+                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)"
+                                        formControlName="skill">
+                                </mat-chip-list>
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Email</mat-label>
+                                <input matInput name="email" formControlName="email">
+                                <mat-hint>Ex; abc@gmail.com</mat-hint>
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field appearance="outline" class="mb-3">
+                                <mat-label>Choose a date</mat-label>
+                                <input matInput [matDatepicker]="picker" [matDatepickerFilter]="myFilterToday"
+                                    [min]="todayDate" name="date" formControlName="date" readonly>
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Enter your password</mat-label>
+                                <input matInput [type]="hide ? 'password' : 'text'" name="password"
+                                    formControlName="password">
+                                <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </p>
+                        <div class="d-flex" ngClass="justify-content-{{group.value}}">
+                            <button type="submit" mat-raised-button color="accent">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </mat-tab>
+            <mat-tab label="Login">
+                <div id="login">
+                    <h1 class="text-center">Login Form</h1>
+                    <mat-divider></mat-divider>
+                    <form action="" class="mt-3" [formGroup]="loginForm" (ngSubmit)="login()">
+                        <mat-stepper #stepper>
+                            <mat-step [stepControl]="loginForm">
+                                <ng-template matStepLabel>Fill out your Email</ng-template>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Email</mat-label>
+                                    <input type="emial" matInput placeholder="Last name, First name"
+                                        formControlName="email">
+                                </mat-form-field>
+                                <div>
+                                    <button mat-button matStepperNext>Next</button>
+                                </div>
+                            </mat-step>
+                            <mat-step [stepControl]="loginForm" label="Fill out your Password">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Password</mat-label>
+                                    <input type="password" matInput formControlName="password"
+                                        placeholder="abc@gmail.com">
+                                </mat-form-field>
+                                <div>
+                                    <button mat-button matStepperPrevious>Back</button>
+                                    <button mat-button matStepperNext>Next</button>
+                                </div>
+                            </mat-step>
+                            <mat-step>
+                                <ng-template matStepLabel>Done</ng-template>
+                                <button type="submit" mat-raised-button color="accent">Save</button>
+                                <div>
+                                    <button mat-button matStepperPrevious>Back</button>
+                                    <button mat-button (click)="stepper.reset()">Reset</button>
+                                </div>
+                            </mat-step>
+                        </mat-stepper>
+                    </form>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+
+    </div>
+    <button type="button" mat-raised-button (click)="openDialog()">Dialog Box</button>
+    <button mat-raised-button (click)="openBottomSheet()">Open BottomSheet</button>
+</div>
