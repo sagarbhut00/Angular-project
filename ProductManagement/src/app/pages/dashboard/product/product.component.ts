@@ -16,15 +16,15 @@ export class ProductComponent implements OnInit {
   constructor(
     private router: Router,
     private productservice: ProductService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService) { }
+
+  ngOnInit(): void {
     if (localStorage.getItem('Product') === null || localStorage.getItem('Product') == undefined) {
       this.productservice.setProductList([]);
       return;
     }
     this.productList = this.productservice.getProductList();
   }
-
-  ngOnInit(): void { }
 
   viewProduct(obj: any) {
     this.product = obj;

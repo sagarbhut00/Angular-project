@@ -29,8 +29,23 @@ export class ProductService {
     return this.http.post(environment.baseApi + 'products', data);
   }
 
-  edit(data: object) {
-    return this.http.post(environment.baseApi + 'products/update', data);
+  edit(data: Object) {
+    return this.http.post(environment.baseApi + 'products/update', data)
+      .subscribe((res: any) => {
+        console.log(res);
+        let dataList = this.getProductList();
+        let arr = dataList.map((obj: any) => {
+          console.log(obj);
+          if (obj.id === Number(res.data.id)) {
+            return res.data;
+          }
+          return obj;
+        });
+        this.setProductList(arr);
+        this.toastr.success('Product Updated Successfull!');
+        this.router.navigate(['dashboard/product']);
+        this.editProductObj.next(null);
+      });
   }
 
   delete(index: any, data: any) {

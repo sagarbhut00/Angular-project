@@ -1,11 +1,14 @@
 import { HttpClientModule, HttpHandler, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { fakeAsync, TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth-service/auth.service';
 import { AppInterceptor } from './app.interceptor';
 
 describe('AppInterceptor', () => {
+  let authservice: AuthService;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -15,6 +18,7 @@ describe('AppInterceptor', () => {
       providers: [
         AppInterceptor,
         ToastrService,
+        AuthService,
         {
           provide: HTTP_INTERCEPTORS,
           useClass: AppInterceptor,
@@ -23,6 +27,7 @@ describe('AppInterceptor', () => {
       ]
     })
       .compileComponents();
+    authservice = TestBed.inject(AuthService);
   })
   const next: any = {
     handle: () => {
@@ -32,14 +37,18 @@ describe('AppInterceptor', () => {
     }
   };
 
-  it('should be created', () => {
+  it('should be created', fakeAsync(() => {
     const interceptor: AppInterceptor = TestBed.inject(AppInterceptor);
+    let token = 'dsfsadasd99999';
+    authservice.setToken(token);
+    tick();
     expect(interceptor).toBeTruthy();
-  });
+  }));
 
   it('if user is login than pass token to request in interceptor', fakeAsync(() => {
-    const req = new HttpRequest('GET', '/test')
+    const req = new HttpRequest('GET', '/test');
     const interceptor: AppInterceptor = TestBed.inject(AppInterceptor);
+    tick();
     interceptor.intercept(req, next);
   }));
 });
