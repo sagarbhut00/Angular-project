@@ -1,0 +1,91 @@
+<div class="container">
+    <h1>Dashboard</h1>
+    <div class="d-flex justify-content-end mb-2">
+        <button mat-raised-button color="primary" (click)="openDialog()">+ADD</button>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="bg-light rounded shadow h-200 p-3 mt-3">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="search">
+                <mat-form-field appearance="outline">
+                    <mat-label>
+                        <mat-icon>search</mat-icon>
+                        Search
+                    </mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. mobile" #input>
+                </mat-form-field>
+            </div>
+        </div>
+        <div>
+            <table mat-table [dataSource]="dataSource" matSort matSortDirection="desc" matSortDisableClear>
+
+                <!-- Date Column-->
+                <ng-container matColumnDef="image">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Image </th>
+                    <td mat-cell *matCellDef="let row">
+                        <div class="imagepreview mt-3 mb-3">
+                            <div class="image" [style.backgroundImage]="'url('+ row.image +')'"></div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <!-- Type Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                    <td mat-cell *matCellDef="let row" matSort> {{row.name}} </td>
+                </ng-container>
+
+                <!-- Category Column -->
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+                    <td mat-cell *matCellDef="let row"> {{row.type}} </td>
+                </ng-container>
+
+                <!-- Amount Column -->
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+                    <td mat-cell *matCellDef="let row">{{row.description}} </td>
+                </ng-container>
+
+                <!-- Note Column -->
+                <ng-container matColumnDef="amount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+                    <td mat-cell *matCellDef="let row"> {{row.amount}} </td>
+                </ng-container>
+
+                <!-- Action Column -->
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let row; let i = index">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="editData(row)">
+                                <mat-icon color="primary">edit</mat-icon>
+                                <span>Edit</span>
+                            </button>
+                            <button mat-menu-item (click)="deleteData(i)">
+                                <mat-icon color="warn">delete</mat-icon>
+                                <span>Delete</span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <ng-container>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="6" *ngIf="!noDataTemp">No data matching the filter {{input.value}}
+                        </td>
+                        <!-- <td class="mat-cell text-danger text-center" colspan="6" *ngIf="noDataTemp">No data Found</td> -->
+                    </tr>
+                </ng-container>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        </div>
+    </div>
+</div>

@@ -58,7 +58,6 @@ export class AddEditProductComponent implements OnInit {
     const file = event.target.files[0];
     this.fileHolder = event.target.files[0];
     this.addProductForm.get('image')?.setValue(file)
-
   }
 
   add() {
