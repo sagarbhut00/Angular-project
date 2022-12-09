@@ -1,0 +1,10 @@
+<mat-toolbar class="toolbar">
+  <img class="main_logo" src="https://cdn.moontechnolabs.com/live/images/moon_new_logo_tm.svg" alt="main_logo"
+    data-src="https://cdn.moontechnolabs.com/live/images/moon_new_logo_tm.svg">
+  <button mat-button class="toolbar-btn" (click)="onNavigate('dashboard')">Dashboard</button>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
+<router-outlet></router-outlet>
