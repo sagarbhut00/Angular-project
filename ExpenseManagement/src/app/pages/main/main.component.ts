@@ -47,8 +47,7 @@ export class MainComponent implements OnInit {
     }
   }
 
-  onNavigate(path: string,name: string) {
+  onNavigate(path: string, name: string) {
     this.router.navigate([`main/${path}`]);
   }
-
 }
